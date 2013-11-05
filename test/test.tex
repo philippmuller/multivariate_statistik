@@ -1,0 +1,151 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, a4paper]{article}
+\usepackage[top=3cm, right=2cm, bottom=2.5cm, left=2cm]{geometry}
+\setlength{\parindent}{0pt}
+
+\usepackage{float}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+
+
+\usepackage{unicode-math}  % support opentype math fonts 
+
+\defaultfontfeatures{Ligatures=TeX,Scale=.95} 
+\setmathfont[Scale=0.92]{Lucida Math Std} 
+\setmainfont{Lucida Std} 
+
+
+% \usepackage[altbullet]{lucidabr}     % get larger bullet
+% \DeclareEncodingSubset{TS1}{hlh}{1}  % including \oldstylenums% \fontspec{Lucida}
+
+
+
+\usepackage{framed}
+\reversemarginpar
+\addtolength\marginparwidth{20pt}
+
+
+\usepackage{ifpdf} % live url's if pdf.
+\ifpdf
+  \usepackage[breaklinks,colorlinks,linkcolor=black,citecolor=black,
+              urlcolor=black]{hyperref}
+\else
+  \usepackage{url}
+\fi
+
+
+\usepackage{titling} \setlength{\droptitle}{-110pt}
+\pagestyle{headings}
+
+
+\usepackage{graphicx, amsmath,  amssymb, amstext, amsfonts, color,
+enumerate, subfigure, listings, longtable, lastpage,
+fancyhdr, fancybox, hyperref, algorithmic, mathrsfs,mathabx}
+\usepackage[parfill]{parskip}
+\usepackage[ngerman]{babel} % Deutsches Sprachpaket verwenden
+\usepackage[babel,german=quotes]{csquotes}
+
+\fancyhf{}
+\usepackage{array,ragged2e}
+\usepackage{ae}
+\usepackage[amsmath,thmmarks]{ntheorem}
+\usepackage{dsfont}
+\frenchspacing
+
+\newcommand{\authors}{Philipp Müller} % Name
+\newcommand{\tutor}{} % Name Deines Tutors
+\newcommand{\expage}{} % Die Nummer des Übungsblatts
+\newcommand{\expageuntil}{} % Das Abgabedatum
+\newcommand{\doctitle}{\textbf{Multivariate Statistik}}
+\newcommand{\fach}{}
+\newcommand{\E}{\mbox{I\negthinspace E}} 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\doctitle}
+\author{\authors}
+\date{\today}
+\pagenumbering{arabic}
+% Kopfzeile
+\lhead{\doctitle}
+\rhead{\date}
+
+% Fußzeile
+%\rfoot{\textbf{Tutor:} \tutor}
+%\lfoot{\fach}
+%\cfoot{\textbf{Abgabe:} \expageuntil}
+\rfoot{Seite \thepage\ von \pageref{LastPage}}
+\newtheorem{satz}{Satz}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{korollar}{Korollar}
+% Now the optional argument takes over
+\theoremstyle{empty}
+\newtheorem{namedtheorem}{}
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{lemma}[section]{Lemma}
+% \newtheorem{proposition}[section]{Proposition}
+% \newtheorem{korollar}[theorem]{Korollar}
+
+
+\newenvironment{beweis}[1][Beweis]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{beispiel}[1][Beispiel]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{bemerkung}[1][Bemerkung]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\baselinestretch}{1.2}
+
+
+
+
+% some math stuff
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\1}{\mathds{1}}
+
+\renewcommand{\E}{\mathrm{E}}
+
+\newcommand{\Var}{\mathrm{Var}}
+
+\newcommand{\Cov}{\mathrm{Cov}}
+% \renewcommand{\C}{\mathbb{C}}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
+\renewcommand{\d}{\,\mathrm{d}}
+\providecommand{\mtext}[1]{\quad \text{#1} \quad}
+
+\providecommand{\eval}[1]{\left. #1 \right|}
+
+
+
+\begin{document}
+
+Test.
+\[ \int f(x) \d x \]
+
+
+
+
+
+
+
+
+
+
+\end{document}
