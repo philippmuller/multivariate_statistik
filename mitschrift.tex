@@ -64,13 +64,23 @@ fancyhdr, fancybox, hyperref, algorithmic, mathrsfs,mathabx} %math
 %\lfoot{\fach}
 %\cfoot{\textbf{Abgabe:} \expageuntil}
 \rfoot{Seite \thepage\ von \pageref{LastPage}}
-\newtheorem{satz}{Satz}
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-\newtheorem{korollar}{Korollar}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+
+
+\theoremstyle{definition}
+\newtheorem{satz}[thm]{Satz}
+\newtheorem{theorem}[thm]{Theorem}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{korollar}[thm]{Korollar}
+\newtheorem{beispiel}[thm]{Beispiel}
+\newtheorem*{beweis}{Beweis}
+\newtheorem{aufgabe}{Aufgabe}
+
 % Now the optional argument takes over
-\theoremstyle{empty}
+
 \newtheorem{namedtheorem}{}
 % \newtheorem{theorem}{Theorem}[section]
 % \newtheorem{lemma}[section]{Lemma}
@@ -78,14 +88,14 @@ fancyhdr, fancybox, hyperref, algorithmic, mathrsfs,mathabx} %math
 % \newtheorem{korollar}[theorem]{Korollar}
 
 
-\newenvironment{beweis}[1][Beweis]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{definition}[1][Definition]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{beispiel}[1][Beispiel]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{bemerkung}[1][Bemerkung]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+% \newenvironment{beweis}[1][Beweis]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+% \newenvironment{definition}[1][Definition]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+% \newenvironment{beispiel}[1][Beispiel]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+% \newenvironment{bemerkung}[1][Bemerkung]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \renewcommand{\baselinestretch}{1.2}
@@ -98,10 +108,12 @@ fancyhdr, fancybox, hyperref, algorithmic, mathrsfs,mathabx} %math
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\1}{\mathds{1}}
-
+% \newcommand{\N}{\mathbb{N}}
 \renewcommand{\E}{\mathrm{E}}
 
+
 \newcommand{\Var}{\mathrm{Var}}
+\newcommand{\BIN}{\mathrm{BIN}}
 
 \newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\diag}{\mathrm{diag}}
@@ -124,9 +136,78 @@ fancyhdr, fancybox, hyperref, algorithmic, mathrsfs,mathabx} %math
 
 % Überschrift
 %\begin{center}{\bf \Large Blatt \expage}\end{center}
-\section{14.10.2013}
-Integrationstheorie in mehr als einer Dimension, Linearität von Integranden
-\section*{16.10.2013}
+\section{Multivariate Verteilungen}
+
+
+Ein $p$-dimensionaler Zufallsvektor ist ein Spaltenvektor
+\(X=\begin{pmatrix}X_1\\\vdots\\X_p\end{pmatrix}\).\\
+\begin{beispiel}
+   Sei $\Omega=\{a,b\}$, $P$ das Wahrscheinlichkeitsmaß auf $\Omega$ mit $P(\{a\})=P(\{b\})=\frac{1}{2}$, $X_1,X_2:\Omega\rightarrow\mathbb{R}$ seien Zufallsvariablen mit:
+
+\[   i=1,2:P(X_i=0)=P(X_i=1)=\frac{1}{2}\] 
+      \end{beispiel}
+
+     Dann ist $X=\begin{pmatrix}X_1\\X_2\end{pmatrix}$ ein zweidimensionaler Zufallsvektor. 
+
+     Lässt sich aus den gegebenen Information \(P(X_1+X_2=1)\) berechnen?\\
+
+   Nein, denn die eindimensionale Beschreibung \((1)\) enthält nicht genügend Information über die Verteilung von \(X\).
+      \begin{enumerate}
+      \item Falls \(X_1(a)=X_2(a)=0\) und \(X_1(b)=X_2(b)=1\), dann gilt \((1)\) und \(P(X_1+X_2=1)=P(\emptyset)=0\).
+      \item Falls \(X_1(a)=X_2(b)=1\) und \(X_1(b)=X_2(a)=1\), dann gilt \((1)\) und \(P(X_1+X_2=1)=P(\Omega)=1\).
+      \end{enumerate}
+
+Die Verteilung eines Zufallsvektors \(X=\begin{pmatrix}X_1\\\vdots\\X_p\end{pmatrix}\) lässt sich durch seine Verteilungsfunktion \(F=F_X:\mathbb{R}^p\rightarrow\mathbb{R}\) beschreiben, wobei:
+
+\[\begin{pmatrix}x_1\\\vdots\\x_p\end{pmatrix}\in\mathbb{R}^p:F(x_1,\dots,x_p)=P(X_1\le x_1,\dots,X_p\le x_p)\]
+\textbf{Beispiel 1.1}   \[F(x_1,x_2)=P(X_1\le x_1, X_2\le x_2)\\X_1\equiv X_2:F(x_1,x_2)=P(X_1\le x_1, X_1\le x_2)=P(X_1\le \min(x_1,x_2))\]
+\[=\begin{cases}0&\min(x_1,x_2)<0\\P(X_1=0)=\frac{1}{2}&0\le \min(x_1,x_2)<1\\1&\min(x_1,x_2)\ge 1\end{cases}\]
+   Ist \(X=\begin{pmatrix}X_1\\\vdots\\X_p\end{pmatrix}\) ein diskreter Zufallsvektor, d. h. nimmt \(X\) nur endlich oder abzählbar unendlich viele Werte an, dann lässt sich seine Verteilung durch seine Wahrscheinlichkeitsfunktion \(f:\mathbb{R}^p\rightarrow\mathbb{R}\) beschreiben, wobei \(f(x)=P(X=x),x\in\mathbb{R}^p\). Es gilt:
+   \[P(X\in D)=\sum_{j:x^{(j)}\in D}f(x^{(j)}),D\subset\mathbb{R}^p\]
+   \textbf{Beispiel 1.2}
+   \[x^{(1)}=\begin{pmatrix}0\\1\end{pmatrix},x^{(2)}=\begin{pmatrix}1\\0\end{pmatrix}\]
+   \[f(x^{(1)})=P(X=x^{(1)})=P(X_1=0,X_2=1)=P(\{a\})=P(\{b\})=f(x^{(2)})=\frac{1}{2}\]
+   \[f(x)=0,x\in\mathbb{R}\setminus\{x^{(1)},x^{(2)}\}\]
+   Mit $D=\left\{\begin{pmatrix}x_1\\x_2\end{pmatrix}\in\mathbb{R}^2:x_1+x_2=1\right\}$ gilt:
+   \[P(X_1+X_2=1)=P(X\in D)=\sum_{j:x^{(j)}\in D}f(x^{(j)})=\frac{1}{2}+\frac{1}{2}=1\]
+   Ein Zufallsvektor \(X=\begin{pmatrix}X_1\\\vdots\\X_p\end{pmatrix}\) heißt stetig verteilt, wenn es eine Dichte \(f:\mathbb{R}^p\rightarrow[0,\infty)\) gibt, sodass:
+   \[\forall\begin{pmatrix}x_1\\\vdots\\x_p\end{pmatrix}\in\mathbb{R}^p:P(X_1\le x_1,\dots,X_p\le x_p)=\int\limits_{-\infty}^{x_p}\dots\int\limits_{-\infty}^{x_1}f(u_1,\dots,u_p)\d u_1\dots \d u_p\]
+\subsection{Mehrdimensionale Integrale}
+Zur Berechnung des zweidimensionalen Integrals \(\int\limits_c^d\int\limits_a^b g(x,y)\d x\d y\) berechne zunächst für jedes festgehaltene \(y\in[c,d]\) das innere Integral \(G(y)=\int\limits_a^b g(x,y)\d x\).
+
+   \begin{beispiel}
+   Berechne \[\int\limits_0^2\int\limits_0^1 xy \; \d x\d y\]
+      \end{beispiel}
+   \[g(x,y)=xy\]
+   \[G(y)=\int\limits_0^1 xy \; \d x=\left[\frac{x^2y}{2}\right]_{x=0}^1=\frac{y}{2}-\frac{0}{2}=\frac{y}{2}\]
+   \[\int\limits_0^2\int\limits_0^1 g(x,y)\, \d x\d y=\int\limits_0^2 G(y)dy=\int\limits_0^2 \frac{y}{2}\d y=\left[\frac{y^2}{4}\right]_{y=0}^2=1\]
+
+Für \(D\subset\mathbb{R}^2\) und \(g:\mathbb{R}^2\to\mathbb{R}\) ist \(\int\limits_D g(x)\d x=\int\limits_D g(x_1,x_2)\,\d x_1 \d x_2\) definiert durch:
+\[\int\limits_D g(x)\, \d x=\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty} \1_D(x_1,x_2)\cdot g(x_1,x_2)\d x_1 \d x_2 , \1_D(x_1,x_2) \]
+\[=\begin{cases}1&(x_1,x_2)\in D\\0&(x_1,x_2)\notin D\end{cases}\]
+
+Im Fall \(D=\mathbb{R}^2\) schreibt man auch \[\int\limits g(x)\d x=\int\limits g(x_1,x_2)\d x_1 \d x_2=\int\limits_{\mathbb{R}^2} g(x)\d x\]
+\[=\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty} g(x_1,x_2)\d x_1 \d x_2\].\\
+
+Ist \(D\) ein zweidimensionales Intervall der Form \(D=(a_1,b_1)\times(a_2,b_2)\), so ist:
+\[\int\limits_{(a_1,b_1)\times(a_2,b_2)}g(x)\d x=\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty} 1_D(x_1,x_2)\cdot g(x_1,x_2)\;\d x_1 \d x_2\]
+\[=\int\limits_{a_2}^{b_2}\int\limits_{a_1}^{b_1} \1_D(x_1,x_2)\cdot g(x_1,x_2) \d x_1 \d x_2 = \int\limits_{a_2}^{b_2} \int\limits_{a_1}^{b_1} g(x_1,x_2) \d x_1 \d x_2 \]
+
+   \subsection{Rechenregeln}
+   \begin{itemize}
+   
+   \item
+   Linearität
+   \[\forall \; \alpha,\beta\in\mathbb{R},\;f,g:\mathbb{R}^2\to\mathbb{R},\,D\subset\mathbb{R}^2: \int\limits_D (\alpha\cdot f(x)+\beta\cdot g(x)\d x)=\alpha\int\limits_D f(x)\d x+\beta\int\limits_D g(x)\d x\]
+   
+   \item
+   Additivität bezüglich des Integrationsbereichs\\
+   Für disjunkte Mengen \(D_1 , D_2\subset\mathbb{R}^2, D_1 \cap D_2 =\emptyset\) gilt:
+   \[\int\limits_{D_1 \cup D_2} g(x) \d x = \int\limits_{D_1} g(x)\d x + \int\limits_{D_2} g(x)\d x\]
+   
+   \end{itemize}
+
+% \section*{16.10.2013}
 \subsection{Monotonie}
 $$\int\limits_D f(x) \mathrm{d}x \leq \int\limits_D g(x) \d x \quad \text{falls} \quad f(x) \leq g(x), \, \forall x \in D$$
 
@@ -163,11 +244,12 @@ Ist $X = (X_1, \ldots, X_p)^T $ ein Zufallsvektor mit Dichte $f: \R^p \to \R$, d
 
 \[ P(X \in D) = \int\limits_D f(x) \d x \mtext{für} D \subset R^p \mtext{und} \int f(x) \d x = 1 \]
 
-Beispiel 3: Sei $X = (X_1, X_2)^T$ Zufallsvektor mit Dichte
+\begin{beispiel}: Sei $X = (X_1, X_2)^T$ Zufallsvektor mit Dichte
 
 \[
 f(x_1, x_2) = \begin{cases}
 1 \mtext{falls} 0 \leq x_1 \leq 1, \, 0 \leq x_2 \leq 1 \\ 0 \mtext{sonst} \end{cases}\] also Gleichverteilung auf $[0,1]^2$.
+\end{beispiel}
 
 Berechne $P(X_1 \leq X_2)$.
 
@@ -181,16 +263,16 @@ Sei $ X $ ein $p$-dimensionaler Zufallsvektor mit Dichte $ f:\R^p \to \R  $. Bet
 
 $X_1$ hat die sogenannte \textbf{Randdichte} \[f_{X_1}(x_1) = \int f(x_1, x_2) \d x_2,\, x_1 \in R^k . \]
 
-\section{21.10.2013}
+% \section{21.10.2013}
 
-$X$ p-dimensional. Dichte $f$. \[ X = (X_1, X_2)^T \], $ X_1 $ k-dimensional, $X_2$ p-k-dimensional. $X_1$ hat die Randdichte:
+$X$ p-dimensional. Dichte $f$. \[ X = (X_1, X_2)^T ,\] $ X_1 $ k-dimensional, $X_2$ p-k-dimensional. $X_1$ hat die Randdichte:
 
 \[ f_{X_1}(x_1) = \int f(x_1, x_y) \d x_2, \, x_1 \in \R^k .\]
 
 $X_2$ hat die Randdichte \[ f_{X_2} (x_2) = \int f(x_1, x_2) \d x_1, \, x_2 \in \R^{p-k}. \]
 
 
-$f$ heisst dann auch \emph{gemeinsame Dichte}. Die Verteilungen von $X_1$ und $X_2$ heißen \emph{Randverteilungen} (\emph{Marginalverteilungen}).
+$f$ heisst dann auch \emph{gemeinsame Dichte}. Die Verteilungen von $X_1$ und $X_2$ heißen \emph{Randverteilungen} (\emph{Marginalverteilungen}).\\
 
 
 
@@ -203,11 +285,13 @@ $f_{X_1}$ ist eine Dichte von $X_1$, für den Fall $p=2$, $k=1$. Für jedes $x_1
 
 \end{beweis}
 	
-\textbf{Beispiel 4}
+\begin{beispiel}
 $ X = (X_1, X_2)^T $ habe die Dichte $f$ aus Beispiel 3.
 $ Y = (Y_1, Y_2)^T$ habe die Dichte $g(y_1, y_2) = \begin{cases} 1+(2 y_1 - 1)(2y_2 - 1), \, (y_1, y_2) \in v \in [0,1]^2 \\ 0 \mtext{sonst}.\end{cases}$
 
 Bestimme Randdichten $f_{X_i}, g_{y_i}$
+
+\end{beispiel}
 
 \[ f_{X_1}(x_1) = \int\limits_{-\infty}^{\infty}f(x_1, x_2) \d x_2 = 
 \begin{cases} 1, \, x_1 \in [0,1] \\
@@ -255,11 +339,13 @@ Sind $X_1, \ldots, X_p$ Zufallsvariablen und $f$ eine Dichte von $(X_1, \ldots, 
 
 \[ f(x_1, \ldots, x_p) = f_{X_1}(x_1) \cdots f_{X_p}(x_p), \, \forall x_1, \ldots, x_p \in \R. \]
 
-\textbf{Beispiel 5}
+\begin{beispiel}
 
 $ X = (X_1, X_2)^T $ sei Zufallsvektor mit Dichte 
 \[ f(x_1, x_2) = \begin{cases} x_1 + x_2, \, \mtext{für} \, 0 \leq x_1, x_2 \leq 1  \\ 0, \, \mtext{sonst}. \end{cases}  \] 
 Randdichte:
+
+\end{beispiel}
 
 \[ f_{X_1}(x_1) = \begin{cases} \int\limits_{0}^1 x_1+ x_2 \d x_2 = x_1 + [\frac{x_2^2}{2}]_0^1 = x_1 + \frac{1}{2}, \, x_1 \in [0,1] \\ 0, \ ,\mtext{sonst.} \end{cases} \]
 
@@ -312,7 +398,7 @@ ist $E[G(x)]$ komponentenweise definiert.
 
 
 
-\section{23.10.13}
+% \section{23.10.13}
 
 
 \[ E[G(X)] =  \begin{pmatrix}
@@ -337,10 +423,9 @@ $ \int H(x) \d x  $ ebenfalls komponentenweise definiert.
 Damit ergibt ($G$ matrixwertig) sich \[ E[G(X)] = E[g_{ij}(X)]_{i,j} = \left(\int g_{ij}(x)f(x)\d x \right)_{i,j} = \int G(x)f(x) \d x \]
 und insbesondere \[  E(X) = \int x f(x) \d x   \]
 
-\textbf{Beispiel 6}
-
+\begin{beispiel}
 Berechne $E(X)$ für $X=(X_1, X_2)^T$ aus Beispiel 5.
-
+\end{beispiel}
 \[ E(X_1) = \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty} x_1 f(x_1, x_2) \d x_1 \d x_2
  =   \int\limits_{0}^{1} \int\limits_{0}^{1} x_1 (x_1 + x_2) \d x_1 \d x_2  \]
  
@@ -349,9 +434,9 @@ Berechne $E(X)$ für $X=(X_1, X_2)^T$ aus Beispiel 5.
 = \int\limits_0^1 \frac{1}{3} + x_2 \, \frac{1}{2} \d x_2 = \frac{1}{3} + \frac{1}{2} \, \frac{1}{2} = \frac{7}{12}\]
 
 Daher \[  E(X_2) = \cdots = \frac{7}{12}    \]
-\[ E(X) = (E(X_1), E(X_2))^T = (\frac{7}{12}, \frac{7}{12})^T    \].
+\[ E(X) = (E(X_1), E(X_2))^T = (\frac{7}{12}, \frac{7}{12})^T   . \]
 
-\textbf{Rechenregeln}
+\subsection{Rechenregeln}
 
 Für $p$-dimensionale Zufallsvektoren $X,Y$, $\alpha, \beta \in \R$, $g,h: \R^p \to \R^n$ gilt:
 
@@ -402,7 +487,7 @@ Einschub für Übungsblatt, Kovarianz:
 
 
 
-\section{28.10.13}
+% \section{28.10.13}
 
 Sei $ X = (X_1, \dots, X_p)^T $ p-dimensionaler Zufallsvektor und $ \mu = (\mu_1, \dots, \mu_p) = E(X) $. (Alle $p$s unten sind eigentlich müs $\mu$)
 
@@ -445,37 +530,44 @@ Allgemeiner: Ist $X = (X_1, \ldots, X_p)^T$ ein $p$-dimensionaler und $Y = (Y_1,
 
 \[ \E [(X_j - \E(X_j))(Y_k - \E(Y_k)) ] = \Cov(X_j, X_k) \] also \[ \Cov(X,Y) = (\Cov(X_j, Y_k))_{j = 1, \ldots, p, \; k = 1, \ldots, q} \]
 
-\textbf{Lemma 7} Sei X ein $p$-dimensionaler, $Y$ ein $q$-dimensionanler Zufallsvektor.\\
+\begin{lemma} Sei X ein $p$-dimensionaler, $Y$ ein $q$-dimensionanler Zufallsvektor.\\ \end{lemma}
 \begin{enumerate}
 \item $\Cov(X,X) = \Var(X)$\\
 \item $\Cov(X,Y) = \E(XY^T) - \E(X)[\E(Y)]^T$, $\Var(X) = \E(XX^T)-\E(X)(\E(X))^T $\\
-\item $\Var(a^T X) = a^T \Var(X) a$ für $a \in \R^p$
-\item $\Var(AX + b) = A \Var(X) A^T$ für $a\in \R^{n\times p}$, $b \in \R^n$
-\item Sei $p = q$. Dann gilt $\Var(X+Y) = \Var(X) + \Var(Y) + \Cov(X,Y) + \Cov(Y,X)$. Falls $X$ und $Y$ unabhängig sind, dann $\Cov(X,Y) = \Cov(Y,X) = 0$ und $\Var(X+Y) = \Var(X) + \Var(Y)$.
-\item $\Var(X)$ ist symmetrisch und nicht-negativ definit, d.h. $a^T \Var(X)a \geq 0, \; \forall a\in \R^p$
+\item $\Var(a^T X) = a^T \Var(X) a$ für $a \in \R^p$\\
+\item $\Var(AX + b) = A \Var(X) A^T$ für $a\in \R^{n\times p}$, $b \in \R^n$\\
+\item Sei $p = q$. Dann gilt $\Var(X+Y) = \Var(X) + \Var(Y) + \Cov(X,Y) + \Cov(Y,X)$. Falls $X$ und $Y$ unabhängig sind, dann $\Cov(X,Y) = \Cov(Y,X) = 0$ und $\Var(X+Y) = \Var(X) + \Var(Y)$.\\
+\item $\Var(X)$ ist symmetrisch und nicht-negativ definit, d.h. $a^T \Var(X)a \geq 0, \; \forall a\in \R^p$\\
 \end{enumerate}
 
-\textbf{Beweis:} Setze $\mu$ = $\E(X)$, $\upsilon = \E(Y)$
+\begin{beweis} Setze $\mu$ = $\E(X)$, $\upsilon = \E(Y)$ \end{beweis}
 \begin{enumerate} %add stuff for letters in enumerate
-\item $\Cov (X,Y) = \E[(X-\mu)(X-\mu)^T] = \Var(X)$
-\item $\Cov(X,Y) = \E[(X-\mu)(Y-\upsilon)^T] = \E(XY^T - \mu Y^T - X\upsilon^T + \mu \upsilon^T) = \E(XY^T) - \mu \E(Y^T) - \E(X)\upsilon^T + \mu \upsilon^T = \E(XY^T - \E(X)(\E(Y))^T$. Daraus folgt mit (a), dass $\Var(X) = \Cov(X,X) = \E(XX^T) - \E(X)(\E(X))^T $
-\item Spezialfall von (d) mit $A = a^T, \; b = 0$
-\item $\Var(AX + b) = \E[(AX + b - \E(AX + b)) (AX + b - \E(AX + b))^T ] = A \E[(X-\E(X)) (X-\E(X))^T A^T ] = \A \Var(X) A^T $
+\item $\Cov (X,Y) = \E[(X-\mu)(X-\mu)^T] = \Var(X)$\\
+\item $\Cov(X,Y) = \E[(X-\mu)(Y-\upsilon)^T] = \E(XY^T - \mu Y^T - X\upsilon^T + \mu \upsilon^T) = \E(XY^T) - \mu \E(Y^T) - \E(X)\upsilon^T + \mu \upsilon^T = \E(XY^T - \E(X)(\E(Y))^T$. Daraus folgt mit (a), dass $\Var(X) = \Cov(X,X) = \E(XX^T) - \E(X)(\E(X))^T $\\
+\item Spezialfall von (d) mit $A = a^T, \; b = 0$\\
+\item $\Var(AX + b) = \E[(AX + b - \E(AX + b)) (AX + b - \E(AX + b))^T ] = A \E[(X-\E(X)) (X-\E(X))^T A^T ] = A \Var(X) A^T $\\
 
-\item $\Var(X + Y) = \E[(X + Y)(X+Y)]^T - (\E(X+Y))^T = \E(XX^T) + \E(XY^T) + \E(YX^T) + \E(YY^T) - \E(X)(\E(X))^T - \E(X)(\E(Y))^T - \E(Y)(\E(X))^T - \E(Y)(\E(Y))^T = \Var(X) + \Cov(X,Y) + \Cov(Y,X) + \Var(Y). $ Sind $X = (X_1, \ldots, X_p)^T$ und $Y = (Y_1, \ldots, Y_p)^T$ unabhängig, dann gilt $\E(X_j, Y_k) = \E(X_j)\E(Y_k)$ also $\Cov(X_j, Y_k) = 0$. Daraus folgt $\Cov(X,Y) = 0, \; \Cov(Y,X) = 0.$
+\item $\Var(X + Y) = \E[(X + Y)(X+Y)]^T - (\E(X+Y))^T = \E(XX^T) + \E(XY^T) + \E(YX^T) + \E(YY^T) - \E(X)(\E(X))^T - \E(X)(\E(Y))^T - \E(Y)(\E(X))^T - \E(Y)(\E(Y))^T = \Var(X) + \Cov(X,Y) + \Cov(Y,X) + \Var(Y). $ Sind $X = (X_1, \ldots, X_p)^T$ und $Y = (Y_1, \ldots, Y_p)^T$ unabhängig, dann gilt $\E(X_j, Y_k) = \E(X_j)\E(Y_k)$ also $\Cov(X_j, Y_k) = 0$. Daraus folgt $\Cov(X,Y) = 0, \; \Cov(Y,X) = 0.$\\
 \item $ \{ \Var(X) \}_{jk} = \Cov(X_j, X_k) = \Cov(X_k, X_j) = \{ \Var(X) \}_{kj}$ für alle $j,k = 1, \ldots, p$. D.h. $\Var(X)$ ist symmetrisch.
-Für alle Vektoren $a^T \in \R^p$ gilt $a^T \Var(X)a = \Var(a^T X) \geq 0$ (wegen c).
+Für alle Vektoren $a^T \in \R^p$ gilt $a^T \Var(X)a = \Var(a^T X) \geq 0$ (wegen c).\\
 
 \end{enumerate}
 
-\textbf{Beispiel 8} Sei $X = (X_1, X_2)$ wie in Bsp. 5. Berechne (i) $\Var(X)$, (ii) $\Var(X_1 - 3X_2)$, (iii) $\Var(X_1 + X_2 + 1, 2X_1 - X_2 - 1)^T$.
-(i) $\E(X_1) = \E(X_2) = \frac{7}{12}$ nach Bsp. 6. \\
-$\E(X_1^2) = \int x_1^2 f_{X_1}(x_1) \d x = \int\limits_0^1 x_1^2 (x_1 + \frac{1}{2}) \d x = \eval{\frac{x_1^4}{4}}_0^1 + \eval{\frac{x_1^3}{6}}_0^1
-= \frac{1}{4} + \frac{1}{6} = \frac{5}{12} \implies \Var(X_1) = \E(X_1^2 - (\E(X_1))^T = \frac{5}{12} - (\frac{5}{12})^T = \frac{11}{144} $ Ebenso $\Var{X_2} = \frac{11}{144}.$
+\begin{beispiel} Sei $X = (X_1, X_2)$ wie in Bsp. 5. Berechne (i) $\Var(X)$, (ii) $\Var(X_1 - 3X_2)$, (iii) $\Var(X_1 + X_2 + 1, 2X_1 - X_2 - 1)^T$.
+\end{beispiel}
 
-$\E(X_1 X_2) = \iint x_1 x_2 f(x_1, x_2) \d x_1 \d x_2 = \int\limits_0^1 \int\limits_0^1 x_1 x_2 f(x_1, x_2) \d x_1 \d x_2 = \int\limits_0^1 x_1^2 \d x \int\limits_0^1 x_2 \d x_2 + \int\limits_0^1 x_1 \d x_1 \int\limits_0^1 x_2^2 \d x_2 = \frac{1}{3} \frac{1}{2} + \frac{1}{2} \frac{1}{3} = \frac{1}{3}$
+\begin{enumerate}
+\item $\E(X_1) = \E(X_2) = \frac{7}{12}$ nach Bsp. 6. \\ 
+\[\E(X_1^2) = \int x_1^2 f_{X_1}(x_1) \d x = \int\limits_0^1 x_1^2 (x_1 + \frac{1}{2}) \d x = \eval{\frac{x_1^4}{4}}_0^1 + \eval{\frac{x_1^3}{6}}_0^1
+= \frac{1}{4} + \frac{1}{6} = \frac{5}{12} \]
 
-$\Cov(X_1, X_2) = \E(X_1 X_2) - \E(X_1) \E(X_2) = \frac{1}{3} - \frac{7}{12} \cdot \frac{7}{12} = -\frac{1}{144} \implies \Var(X) =$
+\[\implies \Var(X_1) = \E(X_1^2 - (\E(X_1))^T = \frac{5}{12} - (\frac{5}{12})^T = \frac{11}{144} \mtext{ebenso} \Var{X_2} = \frac{11}{144}.\]
+
+\[\E(X_1 X_2) = \iint x_1 x_2 f(x_1, x_2) \d x_1 \d x_2 = \int\limits_0^1 \int\limits_0^1 x_1 x_2 f(x_1, x_2) \d x_1 \d x_2 \]
+\[= \int\limits_0^1 x_1^2 \d x \int\limits_0^1 x_2 \d x_2 + \int\limits_0^1 x_1 \d x_1 \int\limits_0^1 x_2^2 \d x_2 = \frac{1}{3} \frac{1}{2} + \frac{1}{2} \frac{1}{3} = \frac{1}{3}\]
+
+\[\Cov(X_1, X_2) = \E(X_1 X_2) - \E(X_1) \E(X_2) = \frac{1}{3} - \frac{7}{12} \cdot \frac{7}{12} = -\frac{1}{144} \implies \Var(X) \]
+
 \[ \begin{pmatrix}
 \Var(X_1) & \Cov(X_1, X_2) \\
 \Cov(X_2, X_1) & \Var(X_2) \\
@@ -484,16 +576,23 @@ $\Cov(X_1, X_2) = \E(X_1 X_2) - \E(X_1) \E(X_2) = \frac{1}{3} - \frac{7}{12} \cd
 \frac{11}{144} & -\frac{11}{144}  \\
 -\frac{11}{144} & \frac{11}{144} \\
 \end{pmatrix} 
- \]
- (ii) Mit $a = (1, -3)^T$ ist $X_1 - 3X_3 = a^T X \implies \Var(X_1 - 3 X_3) =\Var(a^T X) = a^T \Var (X) a $. Einsetzen liefert $\frac{29}{36}$.
- (iii) Mit $A = \begin{pmatrix} 1 & 1 \\ 2 & - 1 \\ \end{pmatrix}$ und $ b = (1, -1)^T$ ist $AX + b = \begin{pmatrix} X_1 + X_2 + 1 \\ 2X_1 - X_2 - 1 \end{pmatrix}  \implies \Var(AX + b) = A \Var(X) A^T$
+ \]\\
+
+ \item Mit $a = (1, -3)^T$ ist $X_1 - 3X_3 = a^T X \implies \Var(X_1 - 3 X_3) =\Var(a^T X) = a^T \Var (X) a $. 
+
+ Einsetzen liefert $\frac{29}{36}$.\\
+
+ \item Mit $A = \begin{pmatrix} 1 & 1 \\ 2 & - 1 \\ \end{pmatrix}$ und $ b = (1, -1)^T$ ist $AX + b = \begin{pmatrix} X_1 + X_2 + 1 \\ 2X_1 - X_2 - 1 \end{pmatrix}  \implies \Var(AX + b) = A \Var(X) A^T$\\
+
+\end{enumerate}
+
+\newpage
 
 
+\subsection*{Übungsblatt 1}
 
-
-\section{Übungsblatt 1}
-
-\textbf{Aufgabe 1} 
+\begin{aufgabe} 
+\end{aufgabe}
 
 a)
 
@@ -520,11 +619,11 @@ Nach a), b) gilt
 
 e)
 \[   P(X_1 > X_2) = \int\limits_0^1 \int\limits_{x_2}^\infty f(x_1, x_2) \d x_1  \d x_2  = \int\limits_0^1 4x_2 \int\limits_{x_2}^\infty x_1 e^{-x_1^2} \d x_1 \d x_2    \]
-\[  = \int\limits_0^1 4x_2 \eval{ -\frac{e^{-x_1^2}}{2}  }_{x_1 = x_2}^{\infty} \d x_2  = \int_0^1 4x_2 \frac{e^{-x_2^2}}{2} \d x_2 = \eval{-e^{-x_2^2}}_0^1 = 1-e^{-1}    \]
+\[  = \int\limits_0^1 4x_2 \eval{ -\frac{e^{-x_1^2}}{2}  }_{x_1 = x_2}^{\infty} \d x_2  = \int_0^1 4x_2 \frac{e^{-x_2^2}}{2} \d x_2 = \eval{-e^{-x_2^2}}_0^1 = 1-e^{-1}    \]\\
 
 
-\textbf{Aufgabe 2}
-
+\begin{aufgabe} 
+\end{aufgabe}
 a)
 
 \[  1 = c \int\limits_-1^1  \int\limits_-1^1 x_1^2 x_2^2 \d x_1 \d x_2 = \int\limits_-1^1  \frac{2}{3} + 2 x_2^2 \d x_2   \] 
@@ -545,13 +644,16 @@ c)
 \[   \Cov(X_1, X_2) = \E(X_1 X_2) = c \int\limits_{-1}^1 \int\limits_{-1}^1  x_1 x_2 (x_1^2 + x_2^2) \d x_1 \d x_2   \]
 \[   = c \int\limits_{-1}^1 \int\limits_{-1}^1 \underbrace{x_1^3 x_2 + x_1 x_2^3}_{\mtext{ungerade Funktion von} x_1} \d x_1 \d x_2  = 0  \]
 
-d) $X_1$ und $X_2$ sind nicht unabhängig, denn nach b) ist die bedingte Dichte der zweiten Variable $f_{X_2}(x_2 | X_1 = x_1)$ nicht unabhängig von $x_1$.
+d) $X_1$ und $X_2$ sind nicht unabhängig, denn nach b) ist die bedingte Dichte der zweiten Variable $f_{X_2}(x_2 | X_1 = x_1)$ nicht unabhängig von $x_1$.\\
 
 
-\textbf{Aufgabe 3}
+\begin{aufgabe} 
+\end{aufgabe}
+
 Für $j = 1, \ldots, p$ und alle $x_j \in \R$ gilt:
 
-\[  f_{X_j} (x_j) = \int \cdots \int f (x_1, \ldots x_p) \d x_1 \ldots \d x_{j-1} \d x_{j+1} \ldots \d x_p = \int \cdots \int h_1 (x_1) \cdots h_p (x_p )  \d x_1 \ldots \d x_{j-1} \d x_{j+1} \ldots \d x_p   \]
+\[  f_{X_j} (x_j) = \int \cdots \int f (x_1, \ldots x_p) \d x_1 \ldots \d x_{j-1} \d x_{j+1} \ldots \d x_p \]
+\[= \int \cdots \int h_1 (x_1) \cdots h_p (x_p )  \d x_1 \ldots \d x_{j-1} \d x_{j+1} \ldots \d x_p   \]
 
 \[  = h_j (x_j) = \prod_{i \neq j} \int h_i (x_i) \d x_i \implies   f_{X_j}(x_j) = c_j h_j (x_j) \mtext{ für eine Konstante } c_j   \]
 
@@ -562,9 +664,10 @@ Für alle $x_1, \ldots, x_p \in \R$ gilt:
 \[ f_{X_1} (x_1), \cdots f_{X_p} (x_p) = \frac{ h_1 (x_1)}{\int h_1 (u_1) \d u_1} \cdots   \frac{ h_p (x_p)}{\int h_p (u_p) \d u_p}       \]
 \[  = \frac{f(x_1, \ldots, x_p)}{\int \cdots \int h_1 (u_1) \cdots h_p (u_p) \d u_1 \ldots \d u_p }  =   \frac{f(x_1, \ldots, x_p)}{\int \cdots \int f(u_1, \ldots, u_p) \d u_1 \ldots \d u_p }  = f(x_1, \ldots, x_p )  \]
 
-Daher sind $X_1, \ldots, X_p$ unabhängig.
+Daher sind $X_1, \ldots, X_p$ unabhängig. 
 
-\section{30.10.13}
+\newpage
+% \section{30.10.13}
 
 $\Cov (X,Y)$ ist ein Maß für den linearen Zusammenhang zwischen den beiden Zufallsvariablen $X$ und $Y$. Der Wert ist aber schwer interpretierbar, denn er ist maßstabsabhängig.
 
@@ -577,24 +680,23 @@ $(\Var(X) = 0 \iff P(X=c)=1 \mtext{für ein} c\in\R$. $\rho$ ist maßstabsunabh�
 \[ \rho(aX, bY) =   \frac{ab \Cov(X,Y) }{\sqrt{ a^2\Var(X) b^2 \Var(Y)}} = \frac{a}{\abs{a}} \frac{b}{\abs{b}} \rho(X,Y), \quad a,b \neq 0   \]
 Vorzeichen können sich jedoch ändern.
 
-\textbf{Satz 9} $X$ und $Y$ seien Zufallsvariablen mit $\Var(X)>0$ und $\Var(Y) > 0 \implies -1 \leq \rho(X,Y) \leq 1.$
+\begin{satz} $X$ und $Y$ seien Zufallsvariablen mit $\Var(X)>0$ und $\Var(Y) > 0 \implies -1 \leq \rho(X,Y) \leq 1.$ \end{satz}
 
 \[    \rho(X,Y) = 1 \iff \exists \alpha > 0, \beta\in\R \mtext{so dass} P(Y = \alpha X + \beta) = 1      \]
 \[    \rho(X,Y) = -1 \iff \exists \alpha < 0, \beta\in\R \mtext{so dass} P(Y = \alpha X + \beta) = 1      \]
 
-\textbf{Lemma 10} Cauchy-Schwarz Ungleichung.
+\begin{lemma} Cauchy-Schwarz Ungleichung. \end{lemma}
 
 Für Zufallsvariablen $X$ und $Y$ gilt $(\E(XY))^2 \leq \E(X^2) \E(Y^2)$ und 
 
 \[  (\E(XY))^2 = \E(X^2)\E(Y^2) \iff \exists a,b \neq 0 \in \R: P(aX=bY) = 1  \]
 
-\textbf{Beweis} Setze $\alpha = \E(Y^2) \beta=\E(XY)$. Behauptung klar, falls $\alpha =0$, da dann $P(Y=0)=1$ und $(\E(XY)) = 0 = \E(X^2)\E(Y^2)$ und es gilt $P(aX=bY)=1$ mit $a=0, b=1$.
+\begin{beweis} Setze $\alpha = \E(Y^2) \beta=\E(XY)$. \end{beweis} Behauptung klar, falls $\alpha =0$, da dann $P(Y=0)=1$ und $(\E(XY)) = 0 = \E(X^2)\E(Y^2)$ und es gilt $P(aX=bY)=1$ mit $a=0, b=1$.
 
 Sei nun $\alpha$ nicht degeniert, also $\alpha \geq 0$.
 
-\[ 0\leq  \E[(\alpha X - \beta Y)^2] = \alpha^2 \E(X^2) - 2\alpha\beta \underbrace{\E(XY)}_{=\beta} + \beta^2\underbrace{\E(Y^2)}_{=\alpha} =   \alpha^2 \E(X^2) - \alpha\beta^2 = \alpha( \E(Y^2)\E(X^2) - (\E(XY))^2)   \]
-
-\[     \underbrace{\implies}_{\alpha>0} (\E(XY))^2 \leq \E(X^2)\E(Y^2)  \]
+\[ 0\leq  \E[(\alpha X - \beta Y)^2] = \alpha^2 \E(X^2) - 2\alpha\beta \underbrace{\E(XY)}_{=\beta} + \beta^2\underbrace{\E(Y^2)}_{=\alpha} \]
+\[=   \alpha^2 \E(X^2) - \alpha\beta^2 = \alpha( \E(Y^2)\E(X^2) - (\E(XY))^2)  \underbrace{\implies}_{\alpha>0} (\E(XY))^2 \leq \E(X^2)\E(Y^2)  \]
 
 Falls $(\E(XY))^2 = \E(X^2 \E(Y^2))$, dann
 
@@ -605,12 +707,13 @@ Falls $P(aX = bY) = 1$ mit z.B. $a \neq 0$m dann $P(X=\frac{b}{a}Y)=1$ und
 \[  (\E(XY))^2 = (\E(\frac{b}{a}Y^2))^2   = \frac{b^2}{a^2} \E(Y^2) \E(Y^2) = \E(X^2)\E(Y^2)   \]
 
 
-\textbf{04.11.13}
+% \textbf{04.11.13}
 
-\textbf{Satz 9} \[-1 \leq \rho(X,Y) \leq 1\]
+Erinnerung Satz 9 und Lemma 10: 
+
+\[-1 \leq \rho(X,Y) \leq 1\]
 Cauchy Schwarz: \[(\E(XY))^2 \leq \E(X^2)\E(Y^2) \]
 
-\textbf{Lemma 10}
 
 $X$ und $Y$ seien Zufallsvariablen mit $\Var(X) > 0, \Var (Y) > 0$
 
@@ -632,9 +735,9 @@ Bzgl. Vorzeichen von $\alpha$ :
 
 Falls $P(Y = \alpha X + \beta) = 1$ mit $\alpha \neq 0$, dann
 
-\[   \rho(X,Y) = \rho(X, \alpha X + \beta) = \rho(X, \alpha X) =  \frac{\alpha}{\abs{\alpha}} \frac{\Cov(X,X)}{\Var(X)} = \begin{cases} 1, \; \alpha > 0 \\ -1, \; \alpha < 0. \end{cases}   \]
+\[   \rho(X,Y) = \rho(X, \alpha X + \beta) = \rho(X, \alpha X) =  \frac{\alpha}{\abs{\alpha}} \frac{\Cov(X,X)}{\Var(X)} = \begin{cases} 1, \; \alpha > 0 \\ -1, \; \alpha < 0. \end{cases}   \]\\
 
-\textbf{Beispiel 11} Betrachte zweimaligen Wurf einer Münze mit $P(\text{'Kopf'}) = p \in (0,1)$.
+\begin{beispiel} Betrachte zweimaligen Wurf einer Münze mit $P(\text{'Kopf'}) = p \in (0,1)$.\end{beispiel}
 
 Sei $X$ die Anzahl Würfe, in denen Kopf fällt und $Y$ der Rest. Berechnen nun $\rho(X,Y)$. Betrachte Erwartungswerte:
 
@@ -656,9 +759,9 @@ Mit $\Delta = \diag(\sigma_1,\ldots, \sigma_p)$ gilt
 
 \[ P = \Var ((Z_1, \ldots, Z_p)^T) = \Var( \Delta^{-1}(X-\E(X))) \underbrace{=}_{\text{Lemma 7}} \Delta^{-1} \Var(X) \Delta^{-1} .    \]
 
-$X_j$ und $X_k$ heißen \emph{unkorreliert}, falls $\rho(X_j, X_k) = 0$.
+$X_j$ und $X_k$ heißen \emph{unkorreliert}, falls $\rho(X_j, X_k) = 0$.\\
 
-\textbf{Satz 12} Transformationssatz für Dichten.
+\begin{satz}Transformationssatz für Dichten. \end{satz}
 
 Sei $X$ ein $p$-dimensionaler Zufallsvektor mit Dichte $f_X$ (nicht Randdichte!).
 
@@ -671,17 +774,17 @@ Dann hat $Y = h(X)$ die Dichte
 \[ f_Y (y) = \begin{cases} f_X (h^{-1} (y)) \abs{\det (\mathrm{D}h^-1 (y))} = \frac{f_X (h^-1 (y))}{\abs{J(h^-1(y))}}, \; y \in h(M)   \\ 0 \mtext{sonst.}    \end{cases}  \]
 
 
-\textbf{Beispiel 13} Log-Normalverteilung.
+\begin{beispiel} Log-Normalverteilung. \end{beispiel}
 
-Sei $X ~ N(\mu, \sigma^2)$, also $f_X (x) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp{(-\frac{(x-\mu)^2}{2\sigma^2}), \; x \in \R}$.
+Sei $X \tilde N(\mu, \sigma^2)$, also \[f_X (x) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp{(-\frac{(x-\mu)^2}{2\sigma^2}), \; x \in \R}.\]
 
-Hier ist $p=1, T = \R, M = \R, h(x)=e^x, h(M) = (0, \infty), h^-1(y) = \log y$, Funktionaldeterminante $J(x) = h'(x) = e^x \neq 0 \; \forall x \in M$.
+Hier ist $p=1,\, T = \R,\, M = \R,\, h(x)=e^x,\, h(M) = (0, \infty), \, h^-1(y) = \log y$, Funktionaldeterminante $J(x) = h'(x) = e^x \neq 0 \; \forall x \in M$.
 
 \(   \implies Y = h(X)  \) hat die Dichte:
 
-\[  f_Y (y) \begin{cases} \frac{ f_X (h^{-1}(y))}{\abs{J(h^-1 (y))}} = \frac{f_X (\log y)}{\abs{J(\log y)}}  = \frac{1}{\sqrt{2\pi\sigma^2}} \exp(-\frac{ (\log y - \mu)^2 }{2\sigma^2}) \frac{1}{y} \end{cases}     \]
+\[  f_Y (y) = \frac{ f_X (h^{-1}(y))}{\abs{J(h^-1 (y))}} = \frac{f_X (\log y)}{\abs{J(\log y)}}  = \frac{1}{\sqrt{2\pi\sigma^2}} \exp(-\frac{ (\log y - \mu)^2 }{2\sigma^2}) \frac{1}{y}    \]
 
-\textbf{Beispiel 14} Sei $X = (X_1, X_2)^T$ ein 2-dimensionaler Zufallsvektor mit Dichte $f_X$ und es sei $T = \{ x\in\R^2 : f_X (x) > 0 \}$ offen.
+\begin{beispiel} Sei $X = (X_1, X_2)^T$ ein 2-dimensionaler Zufallsvektor mit Dichte $f_X$ und es sei $T = \{ x\in\R^2 : f_X (x) > 0 \}$ offen. \end{beispiel}
 
 Bestimme Dichte von $Y = \begin{pmatrix} X_1 + X_2 \\X_1 - X_2 \end{pmatrix}$.
 
@@ -703,19 +806,245 @@ $\implies Y$ hat die Dichte
 
 Falls $y \in \R^2 \setminus h(M)$, dann $h^-1 (y) \in \R^2 \setminus M$, also $f_X (h^-1 (y)) = 0$.
 
-\[ f_Y (y) = \frac{1}{2} f_X (\frac{Y_1 + Y_2}{2}, \frac{Y_1 - Y_2}{2}) \; \forall \, y \in \R^2      \]
-Wicihtiger Spezialfall: Sind $X_1$ und $X_2$ unabhängig, also 
+\[ f_Y (y) = \frac{1}{2} f_X \left(\frac{Y_1 + Y_2}{2}, \frac{Y_1 - Y_2}{2}\right), \; \forall \, y \in \R^2      \]
+Wichtiger Spezialfall: Sind $X_1$ und $X_2$ unabhängig, also 
 
 \[ f_X (x) = f_{X_1}(x_1) f_{X_2}(x_2) \mtext{ für alle } x \in \R      \]
 
 Dann hat $X_1 + X_2$ die Dichte 
 
-\[   f_{X_1 + X_2} (z) = f_{Y_1} (z) = \int\limits_{-\infty}^{\infty} f_Y (z, y_2) \d y_2  = \frac{1}{2} \int\limits_{-\infty}^{\infty} f_X (\frac{t + y_2}{2} , \frac{z - y^2}{2} ) \d y_2  \]
+\[   f_{X_1 + X_2} (z) = f_{Y_1} (z) = \int\limits_{-\infty}^{\infty} f_Y (z, y_2) \d y_2  = \frac{1}{2} \int\limits_{-\infty}^{\infty} f_X \left(\frac{t + y_2}{2} , \frac{z - y^2}{2} \right) \d y_2  \]
 
-\[   = \frac{1}{2} \int\limits_{-\infty}^{\infty} f_{X_1} (\frac{z - y^2}{2}) f_{X_2}(\frac{z-y^2}{2}) \d y_2 \underbrace{=}_{t = \frac{z + y_2}{2}}  \frac{1}{2} \int\limits_{-\infty}^{\infty} f_{X_1} (t) f_{X_2} (\frac{z - (2t - z)}{2}) 2 \d t  \]
+\[   = \frac{1}{2} \int\limits_{-\infty}^{\infty} f_{X_1} \left(\frac{z - y^2}{2}\right) f_{X_2}\left(\frac{z-y^2}{2}\right) \d y_2 \underbrace{=}_{t = \frac{z + y_2}{2}}  \frac{1}{2} \int\limits_{-\infty}^{\infty} f_{X_1} (t) f_{X_2} \left(\frac{z - (2t - z)}{2}\right) 2 \d t  \]
 
 \[  =  \int\limits_{-\infty}^{\infty} f_{X_1} (t) f_{X_2}(z-t) \d t    \]
 
 Dies nennt man Faltung von $f_{X_1}$ und $f_{X_2}$.
+
+
+% \section{06.11.13}
+
+\begin{beispiel} Kunden erscheinen zu zufälligen Zeitpunkten in einem Laden. \end{beispiel} Der erste Kunde erscheint zur Zeit \(X_1\). Die Zeitspanne zwischen dem Eintreffen von Kunde \(i-1\) und Kunde \(i\) sei \(X_i, i=2,3,\dots\)\\
+Dabei seien \(X_1,X_2,\dots\) unabhängige, exponentialverteilte Zufallsvariablen mit Erwartungswert \(\E[X_i] = \frac{1}{\lambda}, i=1,2,\dots\)\\
+Bestimme die gemeinsame Dichte der Ankunftszeiten \(T_1,\dots,T_n\) der ersten \(n\) Kunden\\
+
+\[T_i = X_1+\dots+X_i = \sum_i X_i.\]
+
+$X_i$ hat Dichte $f_{X_i}(x_i) = \lambda e^{-\lambda x_i}, x_i > 0$
+
+\( \Rightarrow X = \begin{pmatrix}X_1\\\vdots\\X_n\end{pmatrix} \) hat Dichte 
+
+\[f_X(x_1,\dots,x_n) = \prod_{i=1}^n f_{X_i}(x_i) = \lambda^n e^{-\lambda \sum_{i=1}^n x_i}, x_1,\dots,x_n > 0\]
+
+\(M = \{x \in \R^n : f_X(x) > 0\}\) ist offen.
+
+\[ T = \begin{pmatrix}T_1\\\vdots\\T_n\end{pmatrix} = h(X) \mtext{mit} h_i(x_1,\dots,x_n) = x_1+ \dots ,x_n \]
+
+\[ h(M) = \{t = \begin{pmatrix}t_1\\ \vdots \\t_n\end{pmatrix} \in \R^n : 0 < t_1 < t_2 < \dots < t_n\} \]
+
+\[ t = h(x) \Leftrightarrow t_j = \sum_{i=1}^j x_i , j=1,\dots,n \Leftrightarrow x_1 = t_1 \wedge x_j = t_j - t_{j-1} , j=2,\dots,n \]
+
+Also \[h^{-1}(t) = \begin{pmatrix}t_1\\t_2-t_1\\\vdots\\t_n-t_{n-1}\end{pmatrix}, J(x) = \det\left(\frac{\partial h_i(x)}{\partial x_j}\right)_{i,j=1,\dots,n} = \det\begin{pmatrix}1&0&0&\dots&0\\1&1&0&\dots&0\\\vdots& & &\ddots&\vdots\\1&1&1&\dots&1\end{pmatrix} = 1 \neq 0 \]
+
+\[\implies \begin{pmatrix}T_1\\\vdots\\T_n\end{pmatrix}\] hat die Dichte:
+
+\[ f_T(t_1,\dots,t_n) = \frac{f_X(h^{-1}(t_1,\dots,t_n))}{|J(h^{-1}(t_1,\dots,t_n))|} = \lambda^n e^{-\lambda (t_1+t_2-t_1+\dots+t_n-t_{n-1})} = \lambda^n e^{-\lambda t_n} , 0<t_1<\dots<t_n \]
+
+
+Sei \(X = \begin{pmatrix}X_1\\X_2\end{pmatrix}\) ein \(p\)-dimensionaler Zufallsvektor, wobei \(X_1\) \(k\)-dimensional und \(X_2\) \((p-k)\)-dimensional.\\
+
+Der \textbf{bedingte Erwartungswert} von \(g(X_1)\) gegeben \(X_2=x_2\) ist definiert durch:
+
+\[ \E[g(X_1) | X_2=x_2] = \int g(x_1) f_{X_1}(x_1 | X_2=x_2) \d x_1 \]
+
+Analog berechnet man die \textbf{bedingte Kovarianzmatrix} \(\Var(X_1 | X_2=x_2)\) unter Verwendung der bedingten Dichte \(f_{X_1}(x_1 | X_2=x_2)\).
+
+\newpage
+\subsection*{Übungsblatt 2}
+
+\begin{aufgabe} 
+\end{aufgabe}
+
+Zeigen Sie: Ist $X$ eine $m \times n $ Zufallsmatrix und sind \(A \in \R^{k\times n}, B \in \R^{m\times l}, C \in \R^{k\times l}\), dann gilt:
+\[ \E[AXB + C] = A\E[X]B + C\]
+
+Sei \[A = (a_{ij})_{i=1,\dots,k; j=1,\dots,n},\] 
+\[X = (x_{ij})_{i=1,\dots,n; j=1,\dots,m}, B = (b_{ij})_{i=1,\dots,m; j=1,\dots,l}, C = (c_{ij})_{i=1,\ldots, k;\; j=1,\dots,l}.\]
+
+\[ \forall \, i=1,\dots,k; j=1,\dots,l: \{\E[AXB + C]\}_{ij} = \E[\{AXB+C\}_{ij}] \]
+\[= \E \left[ \sum_{\mu=1}^n \sum_{\nu=1}^m a_{i \mu}X_{\mu \nu}B_{\nu j} + C_{ij} \right] = \sum_{\mu} \sum_{\nu} a_{i \mu} \E[X_{\mu \nu}] b_{\nu j} + c_{ij} = {A \E[X] B + C}_{ij} \]\\
+
+
+
+\begin{aufgabe} 
+\end{aufgabe}
+
+
+Es sei \(X = (X_1,X_2,X_3)^T \) ein Zufallsvektor mit Kovarianzmatrix
+
+\[ \Var(X) = \begin{pmatrix} 4 & 0 & -2 \\ 0 & 3 & 0 \\ -2 & 0 & 3 \end{pmatrix} \]
+
+Berechnen Sie für jedes \(\alpha \in \R\) den Korrelationskoeffizienten
+
+\[ \rho(\alpha X_1 - 7X_2 + X_3 + 2, \alpha X_1 + 7X_2 - X_3 -2) \]
+
+Setze \[Y_1 = \alpha X_1 - 7X_2 + X_3 + 2, Y_2 = \alpha X_1 + 7X_2 - X_3 - 2, Y = \begin{pmatrix} Y_1 \\ Y_2 \end{pmatrix}.\]
+
+\[ \Var(Y) = \Var \left( \begin{pmatrix}\alpha & -7 & 1 \\ \alpha & 7 & -1 \end{pmatrix} X + \begin{pmatrix}2\\-2\end{pmatrix} \right) = \begin{pmatrix}\alpha&-7&1\\\alpha&7&-1\end{pmatrix} \Var(X) \begin{pmatrix}\alpha&\alpha\\-7&7\\1&-1\end{pmatrix} = \ldots \]
+\[= \begin{pmatrix}4\alpha^2-4\alpha+150 & 4\alpha^2-150 \\ & 4\alpha^2+4\alpha+150\end{pmatrix} = \begin{pmatrix} \Var(Y_1) & \Cov(Y_1,Y_2) \\ & \Var(Y_2)\end{pmatrix}\]
+
+\[ \rho(Y_1,Y_2) = \frac{\Cov(Y_1,Y_2)}{\sqrt{\Var(Y_1)\Var(Y_2)}} \]
+\[= \frac{4\alpha^2-150}{\sqrt{(4\alpha^2-4\alpha+150)(4\alpha^2+4\alpha+150)}} = \frac{2\alpha^2-75}{\sqrt{4\alpha^4+296\alpha^2+5625}} \]
+
+
+\begin{aufgabe} 
+\end{aufgabe}
+
+
+Betrachte Sie \(n\) Ehepaare und nehmen Sie an, dass jede der \(2n\) Personen mit Wahrscheinlichkeit \(p \in (0,1)\) in 20 Jahren noch lebt (unabhängig von den anderen). Es sei \(X\) die Anzahl der in 20 Jahren noch lebenden Personen und \(Y\) sei die Anzahl der Ehepaare, bei denen in 20 Jahren sowohl die Frau als auch der Mann noch lebt. Berechnen Sie den Korrelationskoeffizienten von \(X\) und \(Y\).\\
+
+Seien \(F_1,\dots,F_n, M_1,\dots,M_n\) unabhängige Bernoulli-Variablen.\\
+\(F_i=1 \leftrightarrow\) Frau von Paar \(i\) lebt in 20 Jahren.\\
+\(M_i=1 \leftrightarrow\) Mann von Paar \(i\) lebt in 20 Jahren.
+
+\[ P(F_i=1) = P(M_i=1) = p, i=1,\dots,n \]
+\[ X = \sum_{i=1}^n F_i + \sum_{i=1}^n M_i, Y = \sum_{i=1}^n F_iM_i \]
+\[ X \sim \BIN(2n,p) \Rightarrow \E[X] = 2n \cdot p, \Var(X) = 2n \cdot p \cdot (1-p) \]
+\[ P(F_iM_i = 1) = P(F_i=1) P(M_i=1) = p^2 \]
+\[ \Rightarrow Y \sim \BIN(n,p^2) \Rightarrow \E[Y] = n \cdot p^2, \Var(Y) = n \cdot p^2 \cdot (1-p^2) \]
+\[ \E[XY] = \E \left[ \left( \sum_{i=1}^n F_i + \sum_{i=1}^n M_i \right) \left( \sum_{j=1}^n F_jM_j \right) \right] =\]
+\[ \sum_i \sum_j \E[F_iF_jM_j] + \E[M_iF_jM_j] = \sum_i \E[F_i^2M_i] + \E[M_i^2F_i] + \sum_i \sum_{j\neq i} \E[F_iF_jM_j] + \E[M_iF_jM_j] \]
+\[= 2np^2 + 2n(n-1)p^3\]
+Benutze dabei:
+\[ \E[F_i^2M_i] = \E[F_iM_i] = \E[F_i] \E[M_i] = p^2 = \E[M_i^2F_i] \]
+\[ \E[F_iF_jM_j] = \E[F_i] \E[F_j] \E[M_j] = p^3 = \E[M_iF_jM_j] \]
+
+\[ \implies \rho(X,Y) = \frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}} = \frac{\E[XY] - \E[X]\E[Y]}{\sqrt{2np(1-p)np^2(1-p)^2}} \]
+\[= \frac{2np^2+2n^2p^3-2np^3-2n^2p^3}{np\sqrt{2p(1-p)(1-p^2)}} = \frac{2p-2p^2}{(1-p)\sqrt{2p(1+p)}} = \sqrt{\frac{2p}{1+p}} \]
+
+
+\begin{aufgabe} 
+\end{aufgabe}
+
+
+Es seien \(X_1, \dots, X_n\) unabhängig, identisch verteilte \(p\)-dimensionale Zufallsvektoren mit \(\E[X_1] = \mu\) und \(\Var(X_1) = \Sigma\). Es sei
+\[ \bar{X} = \frac{1}{n} \sum_{j=1}^n X_j \]
+\[ S = \frac{1}{n} \sum_{j=1}^n (X_j - \bar{X})(X_j - \bar{X})^T \]
+Drücken Sie \(\E[\bar{X}]\), \(\Var(\bar{X})\) und \(\E[S]\) durch \(\mu\), \(\Sigma\) und \(n\) aus.
+
+\[ \E[\bar{X}] = \E \left[ \frac{1}{n} \sum_j X_j \right] = \frac{1}{n} \sum_j \E[X_j] = \frac{1}{n} \sum_j \mu = \mu \]
+\[ \Var(\bar{X}) = \Var \left( \frac{1}{n} \sum_j X_j \right) = \frac{1}{n^2} \sum_j \Var(X_j) = \frac{1}{n^2} \cdot n\Sigma = \frac{1}{n} \cdot \Sigma \]
+\[ \E[S] = \E \left[ \frac{1}{n} \sum_j (X_j-\bar{X})(X_j-\bar{X})^T \right] = \frac{1}{n} \cdot \E \left[ \left( \sum_j X_jX_j^T \right) - \bar{X} \left( \sum_j X_j^T \right) - \left( \sum_j X_j \right) \bar{X}^T + n\bar{X}\bar{X}^T \right] \]
+\[= \frac{1}{n} \cdot \sum_j \E [X_jX_j^T] - \E[\bar{X}\bar{X}^T] = \frac{1}{n} \sum_j (\Var(X_j) + \E[X_j] \cdot \E[X_j^T]) - \Var(\bar{X}) - \E[\bar{X}] \cdot \E^T[\bar{X}]\]
+\[] = \Sigma + \mu\mu^T - \frac{1}{n} \Sigma - \mu\mu^T = \frac{n-1}{n} \Sigma \]
+
+
+\subsection*{Übungsblatt 3}
+
+\begin{aufgabe} 
+\end{aufgabe}
+
+Es seien \(X_1\) und \(X_2\) unabhängige exponentialverteilte Zufallsvariablen mit Parameter \(\lambda > 0\). Bestimmen Sie die gemeinsame Dichte von
+\[ Y_1 = X_1 + X_2 , Y_2 = \frac{X_1}{X_2} \]
+Sind \(Y_1\) und \(Y_2\) unabhängig?
+
+
+
+Es seien \(X_i\) und \(T_i\) wie in Beispiel 15 der Vorlesung. Berechnen Sie für jedes \(t>0\)
+\[ \E[X_1 | X_2 = t] \]
+
+
+\begin{aufgabe} 
+\end{aufgabe}
+
+
+Der Zufallsvektor \(X = (X_1, X_2, X_3)^T \) habe die Dichte
+\[ f(x_1,x_2,x_3) = \begin{cases} 2x_1 (x_2+x_3), & 0 \le x_i \le 1, i=1,2,3 \\ 0, & \mbox{sonst} \end{cases} \]
+
+   (i)
+
+   Berechnen Sie für jedes \(x_3 \in [0,1]\)
+   \[ \E \left[ \begin{pmatrix}X_1\\X_2\end{pmatrix} |\, X_3 = x_3 \right] \]
+
+   (ii)
+
+   Berechnen Sie für jedes \(x_3 \in [0,1]\)
+   \[ \Var \left[ \begin{pmatrix}X_1\\X_2\end{pmatrix} |\, X_3 = x_3 \right] \]
+
+
+\newpage
+
+% \section{11.11.13}
+
+\[  X = (X_1, X_2)^T, \; \E[g(X_1) | X_2 = x_2] = \int g(x_1) f_{X_1} (x_1 |X_2 = x_2) \d x_1     \]
+
+Die Funktion $ x_2 \to \E(X_1 | X_2 = x_2)$ wird als Regressionsfunktion bezeichnet für die Regression von $X_1$ auf $X_2$. Ist die Funktion von der Form $\alpha + \beta x_2$, so spricht man von linearer Regression.
+
+Falls $X_1$ und $X_2$ unabhängig sind, dann gilt
+
+\[   \E[g(X_1) | X_2 = x_2] = \int g(x_1) f_{X_1}(x_1 | X_2 = x_2) \d x_1 = \int g(x_1) f_{X_1} (x_1) \d x_1  = \E[g(X_1)] \quad \forall x_2      \]
+
+und die Regressionsfunktion ist konstant.
+
+\begin{beispiel}$(X_1, X_2)^T$ sei wie in Beispiel 5. Berechne Regressionsfunktion $\E(X_1 | X_2 = x_2)$ und $\Var(X_1| X_2 = x_2)$, $0 \leq x_2 \leq 1$.\end{beispiel}
+
+\[ \E(X_1|X_2 = x_2) = \int x_1 f_{X_1} (x_1 | X_2 = x_2) \d x_1 = \int\limits_0^1 x_1 \frac{x_1 + x_2}{0.5 + x_2} \d x_1 \]
+\[= \frac{1}{0.5 + x_2} \int\limits_0^1 x_1^2 + x_1 x_2 \d x_1 = \frac{\frac{1}{3} + \frac{x_2}{2}}{0.5 + x_2}     \]
+\[  \E(X_1^2 | X_2 = x_2) = \frac{1}{0.5 + x_2} \int\limits_0^1 x_1^3 + x_1^2 x_2 \d x_1  = \frac{0.25 + \frac{x_2}{3}}{0.5 + x_2}    \]
+\[   \implies \Var(X_1 | X_2 = x_2) = \frac{\frac{1}{4} + \frac{x_2}{3}}{\frac{1}{2} + x_2} - (\frac{\frac{1}{3} + \frac{x_2}{2}}{0.5 + x_2})^2 = \frac{1+ 6x_2 + 6x_2^2}{18(1 + 2x_2)^2} \]
+
+
+
+
+Sei $X = (X_1, X_2)^T$ $p$-dimensionaler Zufallsvektor mit Dichte $f$, $X_1$ $k$-dimensional, $X_2$ $(p-k)$-dimensional.
+
+Setze \[  \psi (x_2) = \E(X_1 | X_2 = x_2) \; \forall x_2 \in \R^{p-k} : f_{X_2} (x_2) < 0     \]
+
+Der $k$-dimensionale Zufallsvektor $\psi (X_2)$ hat folgende Eigenschaften:
+
+\begin{enumerate}
+
+\item $ \E[\psi(X_2)] = \E(X_1)$
+\item $ \psi(X_2) $ ist die beste Approximation von $X_1$ durch einen Zufallsvektor der Form $g(X_2)$ im Sinne der mittleren quadratischen Abweichung, d.h. für jede Funktion $g: \R^{p-k} \to \R^k$ gilt
+\[  \E (\norm{X_1 - g(X_2)}^2 ) \geq \E (\norm{X_1 - \psi(X_2)}^2 ) \mtext{wobei} \norm{u} = \sqrt{u^T u} \forall u \in \R^k \]
+\end{enumerate}
+Begründung unter der Annahme $f_{X_2} (x_2) > 0 \; \forall x_2 \in \R^{p-k}$.\\
+
+\begin{enumerate}
+\item \[  \E[\psi (X_2)] = \int \psi (x_2) f_{X_2}(x_2) \d x_2  = \iint x_1 f_{X_1} (x_1 | X_2 = x_2) \d x_1 f_{X_2} (x_2) \d x_2    \]
+\[  = \iint \frac{x_1 f(x_1, x_2)}{f_{X_2} (x_2) } f_{X_2} (x_2)   \d x_1 \d x_2 = \iint x_1 f(x_1, x_2) \d x_1 \d x_2 = \E(X_1)     \]
+\item \[  \E(\norm{X_1 - g(X_2)}^2) = \E( \norm{X_1 - \psi (X_2) + \psi(X_2) - g(X_2)}^2 )     \] mit der Definition der euklidischen Norm folgt
+\[  \E(\norm{X_1 - \psi(X_2)}^2) + \E(\norm{\psi(X_2) - g(X_2)}^2)  + 2\E[(X_1 - \psi(X_2))^T(\psi(X_2) - g(X_2))]    \]
+\[  \E[(X_1 - \psi(X_2))^T (\psi(X_2) - g(X_2))] = \iint (x_1 - \psi (x_2))^T - (\psi(x_2) - g(x_2)) f(x_1, x_2) \d x_1 \d x_2           \]
+\[   \int  \left[ \int (x_1 - \psi(x_2)) f(x_1, x_2) \d x_1 \right]^T  (\psi (x_2 ) - g(x_2)) \d x_2  \]
+und für jedes $x_2 \in \R^{p-k}$ gilt
+\[  \int (x_1 - \psi(x_2)) f(x_1, x_2) \d x_1 = \int x_1 f(x_1, x_2) \d x_1 - \int  \int t_1 f_{X_1}(t_1 | X_2 = x_2)     f(x_1, x_2) \d x_1     \] 
+\[  \int x_1 f(x_1, x_2) \d x_1 - \int t_1 \underbrace{f_{X_1} (t_1 | X_2 = x_2) \underbrace{\int f(x_1, x_2) \d x_1}_{=f_{X_2} (x_2)}}_{= f(t_1, x_2)} \d t_1 = 0     \]
+\[  \implies \E( \norm{X_1 - g(X_2)}^2 ) = \E(\norm{X_1 - \psi(X_2)}^2) + \E(\norm{\psi(X_2) - g(X_2)}^2)  \geq \E(\norm{X_1 - \psi(X_2)}^2) \blacksquare \]
+\end{enumerate}
+
+Der Zufallsvektor $\psi(X_2)$ wird auch mit $\E (X_1 | X_2)$ bezeichnet. Sind $X_1$ und $X_2$ unabhängig, dann gilt 
+\[\psi(x_2) = \E (X_1 | X_2 = x_2) = \E(X_1)\] also $\E(X_1 | X_2) = E(X_1)$.
+
+
+\section{Multivariate Normalverteilung}
+
+\begin{lemma} Seien $X_1, \ldots, X_p$ unabhängige $\N(0,1)$ verteilte Zufallsvariablen. \end{lemma}
+\[  A \in \R^{p \times p} \mtext{regulär}, b \in\R^p, \; X = (X_1, \ldots, X_p)^T \]
+\[ f_Y (y)  = \frac{1}{(2\pi)^{\frac{p}{2}}\sqrt{\det B}} \exp (-\frac{1}{2} (y-b)^T B^{-1} (y-b)), \; y \in \R^p  \]
+wobei $B = AA^T$ und es gilt $E(Y) = b$, $\Var(Y) = B$.
+
+\begin{beweis} \end{beweis} $X_i$ hat Dichte $f_{X_i} (x_i) = \frac{1}{\sqrt{2\pi}}e^{\frac{x_i^2}{2}}$ Daher hat $X$ die Dichte 
+\[  f_X (x) = \prod_{i = 1}^p f_{X_i} (x_i) = \frac{1}{(2\pi)^{\frac{p}{2}}} e^{-\frac{1}{2} \sum_{i=1}^p x_i^2 } =  \frac{1}{(2\pi)^{\frac{p}{2}}} \exp (-\frac{1}{2} x^T x   \]
+Wende Satz 1.12 an mit $h(x) = Ax + b$
+
+\[  h^{-1} (y) = A^{-1} (y-b), \: J(x) = \abs{\det Dh(x)} = \abs{\det A}  \neq 0    \]
+Daher $Y = h(X)$ hat die Dichte
+
+\[    f_Y (y) = \frac{f_X (h^{-1}(y))}{\abs{J(h^{-1} (y))}} = \frac{1}{(2\pi)^{\frac{p}{2}}\abs{\det A}} \exp (-\frac{1}{2} (h^{-1}(y))^T h^{-1}(y))   \]
+\[    = \frac{1}{(2\pi)^{\frac{p}{2}}\sqrt{\det B}} \exp (-\frac{1}{2} (y-b)^T (A^{-1})^T A^{-1} (y-b)  )         \]
+\[ \underbrace{=}_{B^{-1} = (AA^{T})^{-1} = (A^{T})^{-1} A^{-1} = (A^{-1})^T A^{-1}} \E(Y) = A\E(X) + b = b   \]
+\[ \Var(Y) = A\,\Var(X)A^T \underbrace{=}_{\Var(X) = \text{Einheitsmatrix}} AA^T = B   \]
+
 
 \end{document}
