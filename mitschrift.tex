@@ -1029,7 +1029,7 @@ Der Zufallsvektor $\psi(X_2)$ wird auch mit $\E (X_1 | X_2)$ bezeichnet. Sind $X
 
 \section{Multivariate Normalverteilung}
 
-\begin{lemma} Seien $X_1, \ldots, X_p$ unabhängige $\N(0,1)$ verteilte Zufallsvariablen. \end{lemma}
+\begin{lemma} Seien $X_1, \ldots, X_p$ unabhängige $N(0,1)$ verteilte Zufallsvariablen. \end{lemma}
 \[  A \in \R^{p \times p} \mtext{regulär}, b \in\R^p, \; X = (X_1, \ldots, X_p)^T \]
 \[ f_Y (y)  = \frac{1}{(2\pi)^{\frac{p}{2}}\sqrt{\det B}} \exp (-\frac{1}{2} (y-b)^T B^{-1} (y-b)), \; y \in \R^p  \]
 wobei $B = AA^T$ und es gilt $E(Y) = b$, $\Var(Y) = B$.
@@ -1045,6 +1045,7 @@ Daher $Y = h(X)$ hat die Dichte
 \[    = \frac{1}{(2\pi)^{\frac{p}{2}}\sqrt{\det B}} \exp (-\frac{1}{2} (y-b)^T (A^{-1})^T A^{-1} (y-b)  )         \]
 \[ \underbrace{=}_{B^{-1} = (AA^{T})^{-1} = (A^{T})^{-1} A^{-1} = (A^{-1})^T A^{-1}} \E(Y) = A\E(X) + b = b   \]
 \[ \Var(Y) = A\,\Var(X)A^T \underbrace{=}_{\Var(X) = \text{Einheitsmatrix}} AA^T = B   \]
+
 
 
 \end{document}
