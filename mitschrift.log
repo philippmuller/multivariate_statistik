@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.4)  12 NOV 2013 02:09
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.4)  14 NOV 2013 16:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1182,6 +1182,16 @@ LaTeX Warning: Unknown theoremstyle `definition'. Using `plain' on input line 7
 \c@currnamedtheoremctr=\count162
 \c@endnamedtheoremctr=\count163
 \c@namedtheorem=\count164
+
+! Package babel Error: You haven't loaded the language german yet.
+
+See the babel package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.103 \selectlanguage{german}
+                             
+? 
 (/usr/local/texlive/2013/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2013/05/16 v3.9f The Babel package
 
@@ -2120,28 +2130,47 @@ OML/hlcm/m/it/12 X[] \U/matha/m/n/12 ^^A \OML/hlcm/m/it/12  „X[]…\OMS/hlcy/m/n/
 12 k[]\OML/hlcm/m/it/12 …\LMR/hlcm/m/n/12 ^^C
  []
 
-[28] 
+[28] [29]
+Overfull \hbox (3.8157pt too wide) in paragraph at lines 1072--1074
+[]$\OML/hlcm/m/it/12 X[]; X[]$ \T1/hlh/m/n/12 sei-en un-ab-hän-gi-ge ex-po-nen-
+ti-al-ver-teil-te Zu-falls-va-ria-blen mit Er-war-tungs-wert $E\OML/hlcm/m/it/1
+2 „X[]… \OMS/hlcy/m/n/12 ƒ
+ []
+
+[30]
+Overfull \hbox (46.46545pt too wide) detected at line 1093
+\OML/hlcm/m/it/12 f[]„x[]… \OMS/hlcy/m/n/12 ƒ [] \OML/hlcm/m/it/12 f„x[]; x[]; 
+x[]… \T1/hlh/m/n/12 d\OML/hlcm/m/it/12 x[] \T1/hlh/m/n/12 d\OML/hlcm/m/it/12 x[
+] \OMS/hlcy/m/n/12 ƒ [] [] \T1/hlh/m/n/12 2\OML/hlcm/m/it/12 x[]x[] \OMS/hlcy/m
+/n/12 ‚ \OML/hlcm/m/it/12 x[]x[] \T1/hlh/m/n/12 d\OML/hlcm/m/it/12 x[] \T1/hlh/
+m/n/12 d\OML/hlcm/m/it/12 x[] \OMS/hlcy/m/n/12 ƒ \T1/hlh/m/n/12 2 [] \OML/hlcm/
+m/it/12 x[] \T1/hlh/m/n/12 d\OML/hlcm/m/it/12 x[] [] x[] \T1/hlh/m/n/12 d\OML/h
+lcm/m/it/12 x[] \OMS/hlcy/m/n/12 ‚ \T1/hlh/m/n/12 2\OML/hlcm/m/it/12 x[] [] x[]
+ \T1/hlh/m/n/12 d\OML/hlcm/m/it/12 x[]
+ []
+
+[31] [32] 
 AED: lastpage setting LastPage
-[29]
+[33]
 \tf@thm=\write5
 \openout5 = `mitschrift.thm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1050.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1050.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1147.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1147.
  (./mitschrift.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1050.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1050.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1147.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1147.
 
 Package rerunfilecheck Info: File `mitschrift.out' has not changed.
-(rerunfilecheck)             Checksum: A7A92704053EF3F993FC5807C52B8111;472.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1050.
+(rerunfilecheck)             Checksum: 314D1ACA44B7BAC9D3C97A66AAE23D4C;537.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1147.
  ) 
 Here is how much of TeX's memory you used:
- 12321 strings out of 493315
- 177206 string characters out of 6137905
- 277878 words of memory out of 5000000
- 15429 multiletter control sequences out of 15000+600000
- 24296 words of font info for 69 fonts, out of 8000000 for 9000
+ 12372 strings out of 493315
+ 177858 string characters out of 6137905
+ 277889 words of memory out of 5000000
+ 15471 multiletter control sequences out of 15000+600000
+ 28201 words of font info for 81 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  30i,15n,43p,971b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -2158,10 +2187,10 @@ b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/mathabx-type1/matha6.p
 fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/mathabx-type1/matha8.
 pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/mathabx-type1/mathx1
 0.pfb>
-Output written on mitschrift.pdf (29 pages, 175631 bytes).
+Output written on mitschrift.pdf (33 pages, 188910 bytes).
 PDF statistics:
- 287 PDF objects out of 1000 (max. 8388607)
- 240 compressed objects within 3 object streams
- 91 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 308 PDF objects out of 1000 (max. 8388607)
+ 257 compressed objects within 3 object streams
+ 96 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

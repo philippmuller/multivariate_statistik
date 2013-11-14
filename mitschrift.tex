@@ -100,7 +100,7 @@ fancyhdr, fancybox, hyperref, algorithmic, mathrsfs,mathabx} %math
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \renewcommand{\baselinestretch}{1.2}
 
-
+\selectlanguage{german}
 
 
 % some math stuff
@@ -1046,6 +1046,102 @@ Daher $Y = h(X)$ hat die Dichte
 \[ \underbrace{=}_{B^{-1} = (AA^{T})^{-1} = (A^{T})^{-1} A^{-1} = (A^{-1})^T A^{-1}} \E(Y) = A\E(X) + b = b   \]
 \[ \Var(Y) = A\,\Var(X)A^T \underbrace{=}_{\Var(X) = \text{Einheitsmatrix}} AA^T = B   \]
 
+% 13-11-2013
+\newpage
+\subsection{Übungsblatt 3} \textbf{Aufgabe 8}
+
+$X = (X_1, X_2)^T$ hat die Dichte 
+\[  f_X (x_1, x_2) = \begin{cases}  \lambda^2 e^{\lambda(x_1 + x_2)} & x_1, x_2 > 0 \\ 0 & \text{sonst} \end{cases}      \]
+Wende Satz 1.12 an mit 
+\[ M = (0, \infty), \; h(x_1, x_2) = (x_1 + x_2, x_1 / x_2)^T, \; x_1 + x_2 = y \mtext{ und} x_1 / x_2 = y_2     \]
+\[ \iff x_2 y_2 + x_2 = y \mtext{und} x_1 = x_2 x_2 \iff x_2 = \frac{y_1}{1 + x_2} \mtext{und} \frac{y_1 y_1}{1 + y_2}     \]
+\[ \mtext{also} h^{-1}(y) = \frac{y_1}{1 + y_2}, \; y = (y_1, y_2)^T \in h(M) = (0, \infty)^2     \]
+
+\[  J(x) = \det Dh(x) = \det \begin{pmatrix}  1 & 1 \\ 1 / x_2 & x_1 / x_2   \end{pmatrix} =\frac{x_2}{x_2^2} - \frac{1}{x_2} = - \frac{x_1 + x_2}{x_2^2} \neq 0 \; \forall X \in ;\]
+$  \implies y = (y_1, y_2)^T = h(X) $ hat die Dichte
+
+\[  f_Y (y)  \frac{f_X (h^{-1}(y))}{\abs{J(h^{-1}(y))}} = \frac{\lambda^2 e^{-\lambda y_1}}{\abs{ - \frac{y_1}{y_1^2 / (1+y_2)^2}}}  \]
+\[  = \begin{cases} \frac{\lambda^2 y_1 e^{-\lambda y_2}}{(1+y_2)^2} & y \in (0,\infty)^2 \\ 0 & \text{sonst} \end{cases}   \]
+
+$ \underbrace{\implies}_{\text{Aufgabe 3}}$ $Y_1$ und $Y_2$ sind unabhängig.
+
+Wähle z.B. $h_1(y_1) = \lambda^2 y_1 e^{-\lambda y_1} \1_{(0,\infty)}(y_1), \; h_2 (y_2) = \frac{1}{(1+y_2)^2} \1_{(0, \infty)} (y_2)$.
+
+\textbf{Aufgabe 9}
+
+$X_1, X_2$ seien unabhängige exponentialverteilte Zufallsvariablen mit Erwartungswert $\E(X_i) = \frac{1}{\lambda}$, $T_1 = X_1$, $T_2 = X_1 + X_2$.
+Nach Beispiel 1.15 ist die Dichte von $T = (T_1, T_2)^T$ gegeben durch
+
+\[  f_T(t_1, t_2) = \begin{cases} \lambda^2 e^{-\lambda t_2} & 0 < t_1 < t_2 \\ 0 & \text{sonst} \end{cases}  \]
+
+Betrachte Randverteilung zur Berechnung der bedingten Dichte:
+
+Für $t_2 > 0$ gilt \[f_{T_2}(t_2) = \int\limits_0^\infty f_T (t_1, t_2) \d t_1 = \int\limits_0^{t_2} \lambda^2 e^{-\lambda t_2} \d t_1 = t_2 \lambda^2 e^{-\lambda t_2}    \] und 
+\[ \begin{cases} f_{T_1} (t_1 | T_2 = t_2) = \frac{f_T (t_1, t_2)}{f_T (t_2)} = \frac{\lambda^2 e^{-\lambda t_2}}{t_2 \lambda e^{-\lambda t_2}} = \frac{1}{t_2} & 0<t_1 < t_2  \\ 0 & \text{sonst} \end{cases}  \]
+\[  \implies \E(X_1 | t_2 = t) = \E(T_1 | T_2 = t) = \int\limits_0^t  \frac{t_1}{t} \d t_1 = \frac{t}{2}, \; t>0.   \]
 
 
+Alternativ: Heuristisches Argument
+\[ \E(X_1 | T_2 = t) = \E(X_2 | T_2 = t) \mtext{wegen Symmetrie}     \]
+\[ \E(X_1 | T_2 = t) + \E(X_2 | T_2 = t) = \E(X_1 + X_2 | T_2 = t) = \E(T_2 | T_2 = t) = t    \]
+\[ \implies \E(X_1 | T_2 = t) = \E(X_2 | T_2 = t) = \frac{t}{2} \; \blacksquare  \]
+
+
+\textbf{Aufgabe 10}
+
+Für $x_3 \in [0,1]$ gilt
+\[ f_{X_3} (x_3) = \iint f(x_1, x_2, x_3) \d x_1 \d x_2 = \int\limits_0^1 \int\limits_0^1 2 x_1 x_2 + x_1 x_3 \d x_1 \d x_2 = 2 \int\limits_0^1 x_1 \d x_1 \int\limits_0^1 x_2 \d x_2 + 2 x_3 \int\limits_0^1 x_1 \d x_1  \]
+\[ = 2 \frac{1}{2} \frac{1}{2} + 2 x_3 \frac{1}{2} = \frac{1}{2} + x_3     \]
+Und
+
+\[  f_{(X_1, X_2)^T} (x_1, x_2 | X_3 = x_3) = \frac{f(x_1, x_2, x_3)}{f_{X_3}(x_3)} = \frac{2 x_1 x_2 + 2 x_1 x_3}{0.5 + x_3}, \; x_1 , x_2 \in [0,1]    \]
+
+a) \[  \E[(X_1, X_2)^T | X_3 = x_3] =  \int\limits_0^1 \int\limits_0^1 (X_1, X_2)^T \frac{4x_1 x_2 + 4 x_1 x_3}{1 + 2 x_3} \d x_1 \d x_2  \]
+\[  = \frac{4}{1 + 2x_3}  \begin{pmatrix}   \int\limits_0^1 x_1^2 \d x_1 \int\limits_0^1 x_2 \d x_2 + x_3 \int\limits_0^1 x_1^2 \d x_1    \\
+\int\limits_0^1 x_1 \d x_1 \int\limits_0^1 x_2^2 \d x_2 + x_3 \int\limits_0^1 x_1 \d x_1 \int\limits_0^1 x_2 \d x_2 \end{pmatrix} \]
+\[ \left( \frac{2}{3}, \frac{2 + 3x_3}{3 + 6 x_3}  \right)^T  \]
+
+b) Analog zu a)
+\[ \E[(X_1^2, X_2^2)^T | X_3 = x_3] = \int\limits_0^1 \int\limits_0^1  (X_1, X_2)^T \frac{4x_1 x_2 + 4 x_1 x_3}{1 + 2 x_3} \d x_1 \d x_2 = \cdots = \begin{pmatrix}  \frac{1}{2} \\ \frac{3 + 4x_3}{6 + 12 x_3}  \end{pmatrix}     \]
+\[ f_{(X_1, X_2)^T} (x_1, x_2 | X_3 = x_3) = 2 x_1 \1_{[0,1]}(x_1) \frac{x_2 + x_3}{0.5 + x_3} \1_{[0,1]} (x_2)  \]
+\[ \underbrace{\implies}_{\text{Aufgabe 3}} \E(X_1 \cdot X_2 | X_3 = x_3) = \E(X_1 | X_3 = x_3) \E(X_2 | X_3 = x_3)      \]
+\[ \implies \Var[(X_1, X_2)^T | X_3 = x_3  ]  = \begin{pmatrix} \frac{1}{2} - (\frac{2}{3})^2 & 0 \\   0 &  \frac{3 + 4x_3}{6 + 12 x_3} - (\frac{2 + 3 x_3}{3 + 6x_3})^2     \end{pmatrix}  \]
+\[  = \begin{pmatrix} \frac{1}{18}  & 0\\   0 &  \frac{1 + 6 x_3 + 6 x_3^2}{18(1 + 2x^3)^2}   \end{pmatrix}    \]
+
+Ergänzung außerhalb der Vorlesung:
+Eine quadratische Matrix $A$ heisst \emph{regulär}, falls ihre Determinante von 0 verschieden ist, also $det A \neq 0$. Andernfalls heißt A singulär, nämlich falls $\det A = 0$.
+
+Für $A \in \R^{m \times n}$ gilt: $A$ regulär 
+$\iff$ $A$ hat eine Inverse $A^{-1}$ 
+$\iff$ Für jedes $b \in \R^{n}$ existiert genau ein $x \in \R^n$ mit $Ax = b$
+$\iff \{ Ax: \; x \in \R^{n} \} = \R^n  $
+$\iff Ax = 0, \; x \in \R^n, $ gilt nur für $x = 0$
+$\iff A^T $ ist regulär
+
+Für jede reguläre Matrix $A$ gilt $(A^T)^{-1} = (A^{-1})^T$.
+
+Sind $A,B \in \R^{n \times m} $ regulär, dann ist $AB$ auch regulär und $(AB)^{-1} = B^{-1} A^{-1}$. 
+
+\textbf{Definition 2} Eine symmetrische Matrix $A \in \R^{p \times p}$ heisst \emph{positiv definit} (Schreibweise in Zukunft $A>0$), falls $x^T A x > 0$ für alle $x \in \R^p \setminus \{0\}$. $A$ heisst \emph{nicht negativ definit}, falls $x^T A x \geq 0$ für alle $x \in \R^p$ (in Zukunft $A \geq 0)$.
+
+\textbf{Bemerkung 3} a) Jede Kovarianzmatrix ist symmetrisch und nicht-negativ definit (Lemma 1.7 f)).
+b) Ist $X$ ein $p$-dimensionaler Zufallsvektor und ist $\Var(X)$ nicht positiv definit, dann existiert $a \in \R^p, \; a \neq 0$ mit $a^T \Var(X)a = 0$.
+
+\[ \underbrace{\implies}_{\text{Lemma 1.7c}} \Var(a^T X) = 0 \implies P((a^T X) = a^T \E(X)) = 1   \]
+
+Das heisst $X$ liegt mit Wahrscheinlichkeit 1 in einer Hyperebene.
+
+c) Aus $A \geq 0$ und $A \neq 0$ folgt nicht $A > 0$ (Lemma 1.7f)). Zum Beispiel gilt für $A = \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}$, $A\neq 0$, $(x_1, x_2) A (x_1, x_2)^T = (x_1 + x_2)^2 \geq 0$ für alle $x_1, x_2 \in \R$. Aber $(1, -1) A (1, -1)^T = 0$, d.h. ``$A>0$'' gilt nicht.
+
+d) Für jede symmetrische nicht-negativ definite Matrix $A \in \R^{p \times p}$ gilt $ A > 0 \iff$ $A$ ist regulär. 
+
+``$\implies$'' $ x^T A x > 0$ für alle $x \neq 0$ $\implies Ax \neq 0$ für alle $x \neq 0$ $\implies A$ regulär. 
+
+``$\impliedby$'' Sei $A$ regulär und für $x \in \R^p$ gelte $x^T A x = 0$. Zeige $x=0$. Für $y \in \R^p$ gelte $p_y (t) = (x+ty)` A (x+ty), \; t \in \R$. $\implies p_y(0)=0, \; p_y(t) \geq 0$ für alle $t \in \R$ $\implies 0 = p_y ` (0) = y^T A x + x^T A y = 2y^T A x$ also $y^T A x = 0$ für jedes $y \in \R^p$. $\implies Ax = 0 \underbrace{\implies}_{\text{$A$ regulär}} x = 0 \; \blacksquare$
+
+$\mu \in \R^p, \; \Sigma \in \R^{p \times p}, \Sigma > 0$ 
+Ein $p$-dimensionaler Zufallsvektor $X$ heisst $p$-dimensional normalverteilt, falls $X$ folgende Dichte hat:
+
+\[ f_X (x) = \frac{1}{(2\pi)^\frac{p}{2} \sqrt{\det \Sigma}} \exp \left( -  \frac{1}{2}(x-\mu)^T \Sigma^{-1} (x-\mu)   \right), \; x \in \R^p  \]
+\[ X \sim N_p (\mu, \Sigma)   \]
 \end{document}
