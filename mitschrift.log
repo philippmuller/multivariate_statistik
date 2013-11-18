@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.4)  14 NOV 2013 16:23
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.4)  18 NOV 2013 18:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2149,27 +2149,33 @@ lcm/m/it/12 x[] \OMS/hlcy/m/n/12 ‚ \T1/hlh/m/n/12 2\OML/hlcm/m/it/12 x[] [] x[]
  \T1/hlh/m/n/12 d\OML/hlcm/m/it/12 x[]
  []
 
-[31] [32] 
+[31] [32]
+Overfull \hbox (47.94467pt too wide) detected at line 1165
+ []\LMR/hlcm/m/n/12 =[]\U/matha/m/n/12 ñ  \OML/hlcm/m/it/12 f„x[]; x[]… \OMS/hl
+cy/m/n/12 ƒ [] [] []
+ []
+
+[33] [34] 
 AED: lastpage setting LastPage
-[33]
+[35]
 \tf@thm=\write5
 \openout5 = `mitschrift.thm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1147.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1147.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1231.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1231.
  (./mitschrift.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1147.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1147.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1231.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1231.
 
 Package rerunfilecheck Info: File `mitschrift.out' has not changed.
 (rerunfilecheck)             Checksum: 314D1ACA44B7BAC9D3C97A66AAE23D4C;537.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1147.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1231.
  ) 
 Here is how much of TeX's memory you used:
- 12372 strings out of 493315
- 177858 string characters out of 6137905
+ 12386 strings out of 493315
+ 178051 string characters out of 6137905
  277889 words of memory out of 5000000
- 15471 multiletter control sequences out of 15000+600000
+ 15483 multiletter control sequences out of 15000+600000
  28201 words of font info for 81 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  30i,15n,43p,971b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2187,10 +2193,10 @@ b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/mathabx-type1/matha6.p
 fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/mathabx-type1/matha8.
 pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/mathabx-type1/mathx1
 0.pfb>
-Output written on mitschrift.pdf (33 pages, 188910 bytes).
+Output written on mitschrift.pdf (35 pages, 197734 bytes).
 PDF statistics:
- 308 PDF objects out of 1000 (max. 8388607)
- 257 compressed objects within 3 object streams
- 96 named destinations out of 1000 (max. 500000)
+ 317 PDF objects out of 1000 (max. 8388607)
+ 264 compressed objects within 3 object streams
+ 98 named destinations out of 1000 (max. 500000)
  65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

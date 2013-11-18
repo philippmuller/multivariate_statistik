@@ -1144,4 +1144,88 @@ Ein $p$-dimensionaler Zufallsvektor $X$ heisst $p$-dimensional normalverteilt, f
 
 \[ f_X (x) = \frac{1}{(2\pi)^\frac{p}{2} \sqrt{\det \Sigma}} \exp \left( -  \frac{1}{2}(x-\mu)^T \Sigma^{-1} (x-\mu)   \right), \; x \in \R^p  \]
 \[ X \sim N_p (\mu, \Sigma)   \]
+
+% 18.11.2013
+
+\textbf{Definition 4} Sei  $\mu \in \R^p, \; \Sigma \in \R^{p \times p}, \; \Sigma > 0$. Ein $p$-dimensionaler Zufallsvektor  $X$ heißt $p$-dimensional oder \emph{multivariat normalverteilt} mit Erwartungswert $\mu$ und Kovarianzmatrix $\Sigma$, falls $X$ die Dichte
+
+\[  f(x) = \frac{1}{(2\pi)^{\frac{p}{2}} \sqrt{\det \Sigma}} \exp{ - \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x - \mu) }, \; x \in \R^p    \]  
+hat. Schreibweise \[X \sim N_p (\mu, \Sigma) \mtext{oder} X \sim N(\mu, \Sigma).    \]
+
+Ist $\mu = 0$ und $\Sigma = $ Einheitsmatrix, dann hat $X$ die $p$-dimensionale oder multivariate Standardnormalverteilung.
+
+\textbf{Beispiel 5a)} Für $p = 1$ und $\Sigma = (\sigma^2)$ ist 
+\[  f(x) = \frac{1}{(2\pi \sigma^2)} \exp{- \frac{(x-\mu)^2}{2\sigma^2}} , \; x \in \R  \]
+\textbf{b)} Sei \[p = 2, X \sim N_2 (\mu, \Sigma), \mu = (\mu_1, \mu_2)^T, \Sigma = \begin{pmatrix} \sigma_1^2 & \sigma_{12} \\ \sigma_{12}&\sigma_2^2 \end{pmatrix}\] und $\rho = \frac{\sigma_{12}}{\sigma_1 \sigma_2}$.
+
+\[  \implies \det \Sigma = \det \begin{pmatrix} \sigma_1^2 & \sigma_1 \sigma_2 \rho \\ \sigma_1 \sigma_2 \rho & \sigma_2^2   \end{pmatrix}  = \sigma_1^2 \sigma_2^2 \det \begin{pmatrix}  1 & \rho \\ \rho & 1 \end{pmatrix} = \sigma_1^2 \sigma_2^2 (1-\rho^2)  \]
+
+
+\[  \Sigma^{-1} = \frac{1}{1-\rho^2}   \begin{pmatrix} \frac{1}{\sigma_1^2} & \frac{-\rho}{\sigma_1 \sigma_2} \\ \frac{-\rho}{\sigma_1 \sigma_2} & \frac{1}{\sigma_2^2}    \end{pmatrix}    \]
+\[  \implies f(x_1, x_2) = \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1-\rho^2} } \exp{ - \frac{1}{2(1-\rho^2)} [ \frac{(x_1 - \mu_1)^2 }{\sigma_1^2} -2\frac{\rho(x_1- x_2)}{\sigma_1} \frac{x_2 - \mu_2}{\sigma_2} + \frac{(x_2 - \mu_2)^2}{\sigma_2^2} ]    }   \]
+
+Für $\rho = 0$ ergibt sich
+
+\[ f(x_1, x_2) = \frac{1}{\sqrt{s \pi \sigma_1^2}} \exp{ - \frac{(x_1 - \mu_1)^2}{2 \sigma_1^2} } \frac{1}{\sqrt{s \pi \sigma_2^2}} \exp{ - \frac{(x_2 - \mu_2)^2}{2 \sigma_2^2} } \; \blacksquare     \]
+
+
+Sei $X$ eine Zufallsvariable mit $\Var(X)>0$, dann gilt für die standardisierte Variable
+\[   Y = \frac{X - \E(X)}{\sqrt{\Var(X)}}: \; \E(Y) = 0, \; \Var(Y) = 1.   \]
+
+
+Sei $X$ ein Zufallsvektor mit $\E(X) = \mu$ und $\Var(X) = \Sigma > 0$. Falls es eine reguläre Matrix $A \in \R^{p \times p} $ gibt mit $\Sigma = AA^T$, dann gilt für $Y = A^{-1} (X - \mu): \; \E(Y) = A^{-1} \E(X - \mu) = 0$ und $\Var(Y) = A^{-1} \Var (X) (A^{-1})^T = A^{-1} A A^T (A^T)^{-1} = I$.
+
+Problem: Existiert $A$? Wie lässt sich $A$ berechnen?
+
+\textbf{Einschub: Spektralzerlegung}
+Ist $A \in \R^{p\times p}, \; x \in \R^p, \; \lambda \in \R$ und gilt $Ax = \lambda x, \; x \neq 0,$ dann heißt $\lambda$ ein (reeller) \emph{Eigenwert} von $A$ und $x$ ist ein zugehöriger Eigenvektor von $A$.
+
+\textbf{Beispiel 6a)} Sei $A = I$ (Einheitsmatrix) $\implies Ax = 1x, \; \forall  x \in \R^{p} \implies \lambda = 1$ ist ein Eigenwert von $A$ und jedes $x \neq 0 $ ist ein Eigenvektor. $\lambda = 0$ ist kein Eigenwert von $A$, denn es gibt kein $x \neq 0: \; Ax = 0x$.
+
+\textbf{b)} Sei \[A = \begin{pmatrix} 1&2\\3&6    \end{pmatrix}\quad A(1,3)^T = (7, 21)^T = 7 (1, 3)^T \] d.h. $\lambda = 7$ ist ein Eigenwert von $A$ mit zugehörigem Eigenvektor $(1,3)^T$. Ebenso ist $(2,6)^T$ Eigenvektor zum Eigenwert $\lambda = 7$, ebenso $(-2, 1)^T$ zum Eigenwert $\lambda = 0$.
+
+\textbf{Lemma 7} Sei $A \in \R^{p \times p} $. 
+\textbf{a)} Ist $x$ ein Eigenvektor von  $A$ zum Eigenwert $\lambda$, dann ist $cx$ für jedes $c \neq 0$ ebenfalls ein Eigenvektor zum Eigenwert $\lambda$.
+
+\textbf{b)} Sind $x,y$ Eigenvektoren von $A$ zum selben Eigenwert $\lambda$, dann ist $x+y$ auch ein Eigenvektor zum selben Eigenwert für $x + y \neq 0$.
+
+\textbf{c)} $A$ ist singulär $\iff \lambda = 0$ ist ein Eigenwert von $A$.
+
+\textbf{Beweis} \textbf{a)} Sei $Ax = \lambda x, \; x \neq 0, c \neq 0 \implies A(cx) = cAx = c\lambda x = \lambda(cx)   $ und $cx \neq 0$.
+\textbf{b)} Sei $Ax = \lambda x,\; Ay = \lambda y \implies A(x +y) = Ax + Ay = \lambda x + \lambda y = \lambda (x+y)$.
+\textbf{c)} $A$ ist singulär $\iff$ es existiert $x \neq 0$ mit $Ax = 0 \iff \lambda = 0$ ist ein Eigenwert zu $A$.
+
+\textbf{Lemma 8} Sei $\lambda$ ein Eigenwert von $A \in \R^{p \times p} $ mit zugehörigem Eigenvektor $x$.
+
+a) Für jedes $k \in \N$ ist $\lambda^k$ ein Eigenwert von $A^k$ mit Eigenvektor $x$.
+b) Ist $A$ regulär, dann ist $\lambda^{-1}$ ein Eigenwert von $A^{-1}$ mit Eigenvektor $x$.
+
+\textbf{Beweis}
+a) Vollständige Induktion: $k = 1: \; A^1 x = \lambda^x x \checkmark \quad$ $k \to k+1: \; A^{k+1} x = A A^{k}x = A \lambda^k x = \lambda^k Ax = \lambda^{k+1}x \checkmark$
+b) $Ax = \lambda x \implies x= \lambda A^{-1}x=A^-1 x = \lambda^{k -1 }x$
+
+Wie findet man Eigenwerte? Falls $\lambda$ ein Eigenwert ist von $A$, dann existiert $x \neq 0$ mit $Ax = \lambda x$, also \[  \lambda I - A)x = 0. \]  das heisst $\lambda$ ist ein Eigenwert von A $\iff \lambda I . A$ ist singulär $\iff \det(/lambda I - A) = 0$.
+
+Das \emph{charakteristische Polynom} von einer Matrix $A \in \R^{p \times p}$ ist definiert durch
+
+\[   p_A (t) = \det(t I - A) \]
+$p_A$ ist ein Polynom von Grad $p$. Die (reellen) Nullstellen von $p_A$ sind die reellen Eigenwerte von $A$.
+
+\textbf{Beispiel 9a)} Sei $A =\begin{pmatrix} 1&2\\3&6    \end{pmatrix}$. $p_A(t) = \det \begin{pmatrix} t-1&2\\3& t-6    \end{pmatrix} = (t-1)(t-6)-6 = t^2 - 7t \implies A$ hat die Eigenwerte 0 und 7, siehe Bsp. 6b).
+
+\textbf{b)} Sei $A$ eine obere Dreiecksmatrix, d.h. $a_{ij} = 0$ für $i > j$. Dann gilt $p_A (t) = \{ a_{ij} \}, \; i = j$, also $a_{11}, \ldots, a_{pp}$.
+c) $A$ hat nicht notwendigerweise Eigenwerte in $\R$.
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
